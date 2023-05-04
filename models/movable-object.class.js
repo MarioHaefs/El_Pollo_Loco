@@ -7,6 +7,7 @@ class MovableObject {
     imageCache = {};
     currentImage = 0; //Ist die Stelle im Array, welches Bild bei der animate() Funktion geladen wird. Start bei 0 und geht bis 5, weil 6 Bilder im Array sind!
     speed = 0.15;
+    otherDirection = false;
 
 
     loadImage(path) {
