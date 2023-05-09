@@ -24,6 +24,9 @@ class Endboss extends MovableObject {
     }
 
 
+    /**
+     * play alert animation of boss chicken
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_WALKING);

@@ -1,5 +1,4 @@
-class Chicken extends MovableObject {
-    
+class Chicken extends MovableObject { 
     y = 355;
     height = 70;
     width = 100;
@@ -21,6 +20,9 @@ class Chicken extends MovableObject {
     }
 
 
+    /**
+     * animate movement of the chicken && let chicken move to left side of the map
+     */
     animate() {
         this.moveLeft();
 

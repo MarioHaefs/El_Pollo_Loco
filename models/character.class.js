@@ -24,9 +24,10 @@ class Character extends MovableObject {
         this.animate();
     }
 
-
+    /**
+     * let Character Pepe walk on press key left or right && play walking sound
+     */
     animate() {
-
         setInterval(() => {
             this.walking_sound.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -42,9 +43,8 @@ class Character extends MovableObject {
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-
         setInterval(() => {
-            if (this.world.keyboard.RIGHT ||this.world.keyboard.LEFT) {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
                 //Walk Animation :
                 this.playAnimation(this.IMAGES_WALKING);
             }

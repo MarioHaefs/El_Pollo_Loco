@@ -16,11 +16,17 @@ class World {
     }
 
 
+    /**
+     * set the var world in character.class.js to this world
+     */
     setWorld() {
         this.character.world = this;
     }
 
 
+    /**
+     * draw all Objects on the Canvas --> build game world
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -41,13 +47,20 @@ class World {
     }
 
 
+    /**
+     * add all Movable Objects to Map (except Pepe)
+     * @param {movable Object} objects
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
-
+    /**
+     * add Character Pepe to Map && mirrors the Image if he walks to left
+     * @param {movable Object} mo
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.ctx.save();

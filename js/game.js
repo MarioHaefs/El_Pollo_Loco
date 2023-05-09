@@ -2,15 +2,18 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-
+/**
+ * draws the whole World into the Canvas --> starts the Game
+ */
 function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
-
-    console.log('My Character is', world.character);
 }
 
 
+/**
+ * bind keyboard buttons to variables --> control to play the Game
+ */
 window.addEventListener("keydown", (e) => {
     if(e.keyCode == 39) {
         keyboard.RIGHT = true;
