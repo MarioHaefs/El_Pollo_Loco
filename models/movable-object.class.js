@@ -28,6 +28,14 @@ class MovableObject {
     }
 
 
+    playAnimation(images) {
+        let loop = this.currentImage % this.IMAGES_WALKING.length; // % = Moduli, damit er nicht auf die Zahlen 6,7,8,etc. geht und somit abschmiert, sondern sich wiederholt wie ein Loop.
+        let path = images[loop];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+    }
+
+
     moveRight() {
         console.log('Moving right');
     }
