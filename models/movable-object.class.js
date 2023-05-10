@@ -1,40 +1,10 @@
-class MovableObject {
-    x = 120;
-    y = 310;
-    img;
-    height = 150;
-    width = 100;
-    imageCache = {};
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
-
-    /**
-     * helping function for addToMap() in world class
-     * @param {Canvas.getContext('2d')} ctx 
-     */
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-
-    /**
-     * helping function for addToMap() in world class. Function: draw frame around Character and Chicken
-     * @param {Canvas.getContext('2d')} ctx 
-     */
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
-    }
 
 
     /**
@@ -54,7 +24,7 @@ class MovableObject {
      * if character collides or get hit --> his health reduces && saves time for isHurt()
      */
     hit() {
-        this.energy -= 10; 
+        this.energy -= 20; 
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -69,7 +39,7 @@ class MovableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
         timepassed = timepassed / 1000; // difference in seconds
-        return timepassed < 1.5;
+        return timepassed < 1.5 ;
     }
 
 
@@ -79,6 +49,7 @@ class MovableObject {
     isDead() {
         return this.energy == 0;
     }
+
 
     /**
      * if Character is in the air apply Gravity and let him fall
@@ -103,29 +74,6 @@ class MovableObject {
 
 
     /**
-     * load static Image into the World
-     * @param {path to the image} path 
-     */
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-
-    /**
-     * preload Array of Images into the World --> more images for animation
-     * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
-     */
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
-    }
-
-
-    /**
      * load several img of Pepe and Enemies in a interval loop --> this makes it look like an Animation
      * @param {array of images for smooth animation} images 
      */
@@ -144,6 +92,7 @@ class MovableObject {
         this.x -= this.speed;
     }
 
+    
     /**
      * move Movable Object right
      */
@@ -151,11 +100,12 @@ class MovableObject {
         this.x += this.speed;
     }
 
+
     /**
      * let Character jump
      */
     jump() {
-        this.speedY = 30;
+        this.speedY = 25;
     }
 
 }
