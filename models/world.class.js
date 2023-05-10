@@ -13,6 +13,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
+        this.checkCollisions();
     }
 
 
@@ -21,6 +22,20 @@ class World {
      */
     setWorld() {
         this.character.world = this;
+    }
+
+
+    /**
+     * check if objects in world collide
+     */
+    checkCollisions() {
+        setInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                }
+            });
+        }, 200);
     }
 
 
@@ -58,21 +73,42 @@ class World {
     }
 
     /**
-     * add Character Pepe to Map && mirrors the Image if he walks to left
+     * add Character Pepe to Map && mirrors the Image if he walks to left && draw border for collision
      * @param {movable Object} mo
      */
     addToMap(mo) {
         if (mo.otherDirection) {
-            this.ctx.save();
-            this.ctx.translate(mo.width, 0);
-            this.ctx.scale(-1, 1);
-            mo.x = mo.x * -1;
+            this.mirrorImage(mo);
         }
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
+
         if (mo.otherDirection) {
-            mo.x = mo.x * -1;
-            this.ctx.restore();
+            this.mirrorImageBack(mo);
         };
+    }
+
+
+    /**
+     * mirrors Image if moving left
+     * @param {Movable Object} mo 
+     */
+    mirrorImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+
+    /**
+     * mirrors Image back if moving right again
+     * @param {Movable Object} mo 
+     */
+    mirrorImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }
 
 }
