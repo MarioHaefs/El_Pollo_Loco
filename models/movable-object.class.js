@@ -13,10 +13,10 @@ class MovableObject extends DrawableObject {
      * @returns - collision detection
      */
     isColliding(mo) {
-       return this.x + this.width > mo.x &&
-       this.y + this.height > mo.y &&
-       this.x < mo.x &&
-       this.y < mo.y + mo.height 
+        return this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
     }
 
 
@@ -24,11 +24,11 @@ class MovableObject extends DrawableObject {
      * if character collides or get hit --> his health reduces && saves time for isHurt()
      */
     hit() {
-        this.energy -= 20; 
+        this.energy -= 20;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
-            this.lastHit = new Date().getTime(); 
+            this.lastHit = new Date().getTime();
         }
     }
 
@@ -39,7 +39,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
         timepassed = timepassed / 1000; // difference in seconds
-        return timepassed < 1.5 ;
+        return timepassed < 1;
     }
 
 
@@ -69,7 +69,11 @@ class MovableObject extends DrawableObject {
      * @returns position of Pepe 
      */
     isAboveGround() {
-        return this.y < 155;
+        if (this instanceof ThrowableObject) { // Throwable Objects should always fall
+            return true;
+        } else {
+            return this.y < 155;
+        }
     }
 
 
@@ -92,7 +96,7 @@ class MovableObject extends DrawableObject {
         this.x -= this.speed;
     }
 
-    
+
     /**
      * move Movable Object right
      */

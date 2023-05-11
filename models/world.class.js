@@ -8,6 +8,7 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    throwableObjects = [];
 
 
     constructor(canvas) {
@@ -16,7 +17,7 @@ class World {
         this.keyboard = keyboard;
         this.draw();
         this.setWorld();
-        this.checkCollisions();
+        this.run();
     }
 
 
@@ -31,16 +32,35 @@ class World {
     /**
      * check if objects in world collide
      */
-    checkCollisions() {
+    run() {
+        let invincible = false; // State of Player
+    
         setInterval(() => {
+            this.checkThrowObjects();
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBar.setPercentageHealthBar(this.character.energy);
+                    if (!invincible) {
+                        this.character.hit();
+                        this.statusBar.setPercentageHealthBar(this.character.energy);
+    
+                        invincible = true; // Player can't be hit for 1 s
+                        setTimeout(() => {
+                            invincible = false; // Player can be hit again after 1 s
+                        }, 1000);
+                    }
                 }
             });
-        }, 200);
+        }, 100);
     }
+
+
+    checkThrowObjects() {
+        if (this.keyboard.UP) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+            this.throwableObjects.push(bottle);
+        }
+    }
+    
 
 
     /**
@@ -55,6 +75,7 @@ class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObjects);
 
         //-----Status Bar stays left top corner in the Screen-----//
         this.ctx.translate(-this.camera_x, 0);
