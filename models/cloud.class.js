@@ -6,7 +6,7 @@ class Cloud extends MovableObject {
     constructor() {
         super().loadImage('assets/img/5_background/layers/4_clouds/1.png')
 
-        this.x = 0 + Math.random() * 500; // Zahl zwischen 200 und 700
+        this.x = 0 + Math.random() * 2000; // Zahl zwischen 200 und 700
 
         this.animate();
     }
@@ -16,7 +16,9 @@ class Cloud extends MovableObject {
      * let clouds move to the left side of the map
      */
     animate() {
-        this.moveLeft();
+        setInterval(() => {
+            this.moveLeft();
+        }, 50);
     }
 
 }
