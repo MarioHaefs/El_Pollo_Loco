@@ -30,7 +30,7 @@ class World {
 
 
     /**
-     * check if objects in world collide
+     * check if objects in world collide && make player after collision for 1 s invincible
      */
     run() {
         let invincible = false; // State of Player
@@ -54,6 +54,9 @@ class World {
     }
 
 
+    /**
+     * bottle always throwed from player position
+     */
     checkThrowObjects() {
         if (this.keyboard.UP) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
