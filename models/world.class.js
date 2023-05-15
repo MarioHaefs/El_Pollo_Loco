@@ -80,6 +80,7 @@ class World {
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.coins);
 
         //-----Status Bar stays left top corner in the Screen-----//
         this.ctx.translate(-this.camera_x, 0);
