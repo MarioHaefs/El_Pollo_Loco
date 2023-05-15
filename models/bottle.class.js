@@ -6,8 +6,8 @@ class Bottle extends MovableObject {
 
     constructor() {
         super();
-        const randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLES.length);
-        const randomImage = this.IMAGES_BOTTLES[randomIndex];
+        let randomIndex = Math.floor(Math.random() * this.IMAGES_BOTTLES.length);
+        let randomImage = this.IMAGES_BOTTLES[randomIndex];
         this.loadImage(randomImage);
         this.height = 80;
         this.width = 65;

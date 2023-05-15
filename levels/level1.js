@@ -37,10 +37,10 @@ const level1 = new Level(
         new Bottle()
     ],
     [
-        new Cloud(),
-        new Cloud2(),
-        new Cloud(),
-        new Cloud2()
+        new Cloud(300),
+        new Cloud(1000),
+        new Cloud(1600),
+        new Cloud(2200) 
     ],
     [
         new BackgroundObject('assets/img/5_background/layers/air.png', -719),
