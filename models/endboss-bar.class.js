@@ -13,19 +13,14 @@ class EndbossBar extends DrawableObject {
 
     constructor() {
         super();
-        this.loadBossBar();
+        this.loadImages(this.IMAGES_ENDBOSSBAR);
         this.setPercentageHealthBar(100);
         this.x = 515;
         this.y = 0;
         this.height = 50;
         this.width = 200;
     }
-
-
-    loadBossBar() {
-        this.loadImages(this.IMAGES_ENDBOSSBAR);
-    }
-
+    
 
     /**
      * 

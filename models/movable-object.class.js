@@ -34,7 +34,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * checks if Character gets hurt 
+     * if Character get hurt play hurt Animation 
      */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
