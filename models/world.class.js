@@ -38,7 +38,7 @@ class World {
             this.checkThrowObjects();
             this.checkBottleCollision();
             this.checkCoinCollision();
-            this.playerInvincible();  
+            this.playerInvincible();
         }, 100);
     }
 
@@ -52,7 +52,7 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBar.setPercentageHealthBar(this.character.energy);
-    
+
                     this.invincible = true; // Player can't be hit for 1 s
                     setTimeout(() => {
                         this.invincible = false; // Player can be hit again after 1 s
@@ -61,7 +61,7 @@ class World {
             });
         }
     }
-    
+
 
 
     /**
@@ -74,7 +74,6 @@ class World {
                 this.level.bottles.splice(i, 1);
                 this.character.collectBottle();
                 this.bottleBar.setPercentageBottleBar(this.character.collectableBottle);
-                console.log('Flaschen eingesammelt', this.character.collectableBottle);
             }
         }
     }
@@ -90,21 +89,31 @@ class World {
                 this.level.coins.splice(i, 1);
                 this.character.collectCoin();
                 this.coinBar.setPercentageCoinBar(this.character.collectableCoin);
-                console.log('Coins eingesammelt', this.character.collectableCoin);
             }
         }
     }
 
 
     /**
-     * bottle always throwed from player position
-     */
+    * bottle always throwed from player position && checks if u collected bottles before throwing
+    */
     checkThrowObjects() {
-        if (this.keyboard.UP) {
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObjects.push(bottle);
+        if (this.keyboard.UP && this.character.collectableBottle > 0) {
+            if (!this.throttled) {
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObjects.push(bottle);
+                this.character.collectableBottle -= 10;
+                this.bottleBar.setPercentageBottleBar(this.character.collectableBottle);
+                this.throttled = true;
+
+                setTimeout(() => {
+                    this.throttled = false;
+                }, 500);
+            }
         }
     }
+
+
 
 
 
@@ -115,7 +124,6 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
@@ -124,19 +132,16 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
 
-        //-----Status Bar stays left top corner in the Screen-----//
-        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0); // Status Bar's stays left top corner in the Screen
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         if (this.character.x >= 1500) {
             this.addToMap(this.endBossBar);
         }
-        this.ctx.translate(this.camera_x, 0);
-        //--------------------------------------------------------//
+        this.ctx.translate(this.camera_x, 0); // Status Bar's stays left top corner in the Screen
 
         this.ctx.translate(-this.camera_x, 0);
-
         // Draw() wird immer wieder aufgerufen!
         let self = this;
         requestAnimationFrame(function () {

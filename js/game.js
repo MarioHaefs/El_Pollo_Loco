@@ -12,7 +12,7 @@ function init() {
 
 
 /**
- * bind keyboard buttons to variables --> control to play the Game
+ * bind keyboard buttons to variables --> controls to play the Game
  */
 window.addEventListener("keydown", (e) => {
     if(e.keyCode == 39) {
