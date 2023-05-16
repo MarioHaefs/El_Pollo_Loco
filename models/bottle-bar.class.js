@@ -28,28 +28,8 @@ class BottleBar extends DrawableObject {
      */
     setPercentageBottleBar(percentage) {
         this.percentage = percentage;
-        let path = this.IMAGES_BOTTLEBAR[this.resolveImageIndex()];
+        let path = this.IMAGES_BOTTLEBAR[this.resolveImageIndexCollectable()];
         this.img = this.imageCache[path];
     }
 
-
-    /**
-     * 
-     * @returns return value which image shows on which % of status bar
-     */
-    resolveImageIndex() {
-        if (this.percentage == 100) {
-            return 5;
-        } else if (this.percentage == 80) {
-            return 4;
-        } else if (this.percentage == 60) {
-            return 3;
-        } else if (this.percentage == 40) {
-            return 2;
-        } else if (this.percentage == 20) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
 }

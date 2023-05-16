@@ -5,6 +5,8 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    collectableBottle = 0;
+    collectableCoin = 0;
 
 
     /**
@@ -21,7 +23,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if character collides or get hit --> his health reduces && saves time for isHurt()
+     * if Player collides or get hit --> his health reduces && saves time for isHurt()
      */
     hit() {
         this.energy -= 20;
@@ -34,7 +36,29 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Character get hurt play hurt Animation 
+     * if Player collides with Bottle he fill the bar
+     */
+    collectBottle() {
+        this.collectableBottle += 10;
+        if (this.collectableBottle > 100) {
+            this.collectableBottle = 100;
+        }
+    }
+
+
+    /**
+     * if Player collides with Coin he fill the bar
+     */
+    collectCoin() {
+        this.collectableCoin += 10;
+        if (this.collectableCoin > 100) {
+            this.collectableCoin = 100;
+        }
+    }
+
+
+    /**
+     * if Player get hurt play hurt Animation 
      */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms

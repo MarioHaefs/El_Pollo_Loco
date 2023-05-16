@@ -47,10 +47,31 @@ class DrawableObject {
     drawFrame(ctx) {
         if (this instanceof Character || this instanceof Chicken) {
             ctx.beginPath();
-            ctx.lineWidth = '5';
+            ctx.lineWidth = '3';
             ctx.strokeStyle = 'blue';
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
+        }
+    }
+
+
+    /**
+     * 
+     * @returns return value which image shows on which % of status bar
+     */
+    resolveImageIndexCollectable() {
+        if (this.percentage == 100) {
+            return 5;
+        } else if (this.percentage >= 70 && this.percentage <= 90) {
+            return 4;
+        } else if (this.percentage >= 50 && this.percentage <= 60) {
+            return 3;
+        } else if (this.percentage >= 30 && this.percentage <= 40) {
+            return 2;
+        } else if (this.percentage >= 10 && this.percentage <= 20) {
+            return 1;
+        } else {
+            return 0;
         }
     }
 
