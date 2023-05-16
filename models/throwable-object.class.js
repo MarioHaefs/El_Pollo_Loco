@@ -19,14 +19,32 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y) {
         super().loadImage('assets/img/6_salsa_bottle/salsa_bottle.png');
+        this.loadImages(this.IMAGES_BOTTLE_ROTATION);
+        this.loadImages(this.IMAGES_BOTTLE_SPLASH);
         this.x = x;
         this.y = y;
         this.height = 90;
         this.width = 75;
         this.throw();
+        this.animate();
     }
 
 
+    /**
+     * play the animation from the bottle
+     */
+    animate() {
+        setInterval(() => {
+            if (!this.isHurt() && this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
+            }
+        }, 100);
+    }
+
+
+    /**
+     * throw bottle and control flying curve of the bottle
+     */
     throw() {
         this.speedY = 30;
         this.applyGravity();
