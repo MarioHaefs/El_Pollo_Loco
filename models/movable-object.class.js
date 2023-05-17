@@ -136,4 +136,12 @@ class MovableObject extends DrawableObject {
         this.speedY = 28;
     }
 
+
+    /**
+     * low Jump() used by Player if he kills enemies && small Chicken
+     */
+    lowJump() {
+        this.speedY = 15;
+    }
+
 }

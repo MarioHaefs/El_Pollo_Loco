@@ -88,18 +88,21 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
+                this.setLastMoveTime()
                 this.otherDirection = false;
                 this.walking_sound.play();
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
+                this.setLastMoveTime()
                 this.otherDirection = true;
                 this.walking_sound.play();
             }
 
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
+                this.setLastMoveTime()
             }
 
             this.world.camera_x = -this.x + 100;
@@ -138,5 +141,13 @@ class Character extends MovableObject {
         let idleTime = new Date().getTime() - this.lastMoveTime;
         idleTime = idleTime / 1000;
         return idleTime > 5;
+    }
+
+
+    /**
+     * this function set the last move time
+     */
+    setLastMoveTime() {
+        this.lastMoveTime = new Date().getTime();
     }
 }

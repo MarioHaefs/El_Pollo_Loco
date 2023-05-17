@@ -35,12 +35,40 @@ class World {
      */
     run() {
         setInterval(() => {
-            this.checkThrowObjects();
-            this.checkBottleCollision();
-            this.checkCoinCollision();
-            this.playerInvincible();
-        }, 100);
+            this.checkCollisions();
+        }, 50);
     }
+
+
+    /**
+    * this function checks the collisions
+    */
+    checkCollisions() {
+        if (!this.character.isHurt()) {
+            this.level.enemies.forEach((enemy) => {
+                this.collisionWithChicken(enemy);
+            });
+        };
+        this.checkBottleCollision();
+        this.checkCoinCollision();
+        this.checkThrowObjects();
+    }
+
+
+    /**
+    * checks the collision with normal enemies
+    * @param {*} enemy
+    */
+    collisionWithChicken(enemy) {
+        if (this.character.isColliding(enemy) && !this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0 ) {
+            this.playerInvincible();
+        }
+        if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0) {
+            enemy.energy -= 100;
+            this.character.jump('low');
+        }
+    }
+
 
 
     /**
@@ -52,6 +80,7 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBar.setPercentageHealthBar(this.character.energy);
+                    console.log('Health', this.character.energy);
 
                     this.invincible = true; // Player can't be hit for 1 s
                     setTimeout(() => {
