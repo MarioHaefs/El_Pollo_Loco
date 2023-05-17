@@ -133,7 +133,7 @@ class MovableObject extends DrawableObject {
      * let Character jump
      */
     jump() {
-        this.speedY = 25;
+        this.speedY = 28;
     }
 
 }

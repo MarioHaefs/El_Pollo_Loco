@@ -60,7 +60,8 @@ class Character extends MovableObject {
     height = 280;
     width = 125;
     y = 155;
-    speed = 7;
+    speed = 6;
+    lastMoveTime;
     walking_sound = new Audio('audio/walking.mp3');
 
 
@@ -71,8 +72,11 @@ class Character extends MovableObject {
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_IDLE);
+        this.loadImages(this.IMAGES_LONG_IDLE);
         this.applyGravity();
         this.animate();
+        this.lastMoveTime = new Date().getTime();
     }
 
     /**
@@ -112,13 +116,27 @@ class Character extends MovableObject {
                 (this.isAboveGround()) {
                 //Jump Animation :
                 this.playAnimation(this.IMAGES_JUMPING);
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+                //Walk Animation :
+                this.playAnimation(this.IMAGES_WALKING);
+            } else if (this.checkIdleTime()) {
+                //Long Idle Animation :
+                this.playAnimation(this.IMAGES_LONG_IDLE);
             } else {
-                if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                    //Walk Animation :
-                    this.playAnimation(this.IMAGES_WALKING);
-                }
+                //Idle Animation :
+                this.playAnimation(this.IMAGES_IDLE);
             }
-        }
-            , 100);
+        }, 100);
+    }
+
+
+    /**
+     * this function checks if the last move time > 5s
+     * @returns true or false
+     */
+    checkIdleTime() {
+        let idleTime = new Date().getTime() - this.lastMoveTime;
+        idleTime = idleTime / 1000;
+        return idleTime > 5;
     }
 }
