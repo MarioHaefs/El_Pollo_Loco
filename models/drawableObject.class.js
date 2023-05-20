@@ -45,9 +45,9 @@ class DrawableObject {
      * @param {Canvas.getContext('2d')} ctx 
      */
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof SmallChicken || this instanceof ThrowableObject || this instanceof Endboss) {
+        if (this instanceof Character) {
             ctx.beginPath();
-            ctx.lineWidth = '3';
+            ctx.lineWidth = '0';
             ctx.strokeStyle = 'blue';
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
