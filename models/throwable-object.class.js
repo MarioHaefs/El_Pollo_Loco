@@ -35,10 +35,16 @@ class ThrowableObject extends MovableObject {
      */
     animate() {
         setInterval(() => {
-            if (!this.isHurt() && this.isAboveGround()) {
+            if (!this.isHurt() && this.isAboveGround()) {           // this. bedeutet hier: dieses Object also das Throwable Object alias Bottle
                 this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
             }
         }, 100);
+
+        setInterval(() => {
+            if (this.isHurt() || !this.isAboveGround()) {
+                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+            }
+        }, 200);
     }
 
 

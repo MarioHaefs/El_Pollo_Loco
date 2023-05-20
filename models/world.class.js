@@ -10,6 +10,7 @@ class World {
     bottleBar = new BottleBar();
     endBossBar = new EndbossBar();
     throwableObjects = [];
+    audio = true;
 
 
     constructor(canvas) {
@@ -31,7 +32,7 @@ class World {
 
 
     /**
-     * check if objects in world and Player collide && make player after collision with enemy for 1 s invincible
+     * run the Game with his Main Functions
      */
     run() {
         setInterval(() => {
@@ -41,12 +42,12 @@ class World {
 
 
     /**
-    * this function checks the collisions
+    *  checks all collision Situations in the Game
     */
     checkCollisions() {
         if (!this.character.isHurt()) {
             this.level.enemies.forEach((enemy) => {
-                this.collisionWithChicken(enemy);
+                this.checkEnemyCollision(enemy);
             });
         };
         this.checkBottleCollision();
@@ -55,12 +56,17 @@ class World {
     }
 
 
+    checkThrowableObjectCollision() {
+        
+    }
+
+
     /**
-    * checks the collision with normal enemies
-    * @param {*} enemy
-    */
-    collisionWithChicken(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0) {
+     * checks the collision with normal enemies
+     * @param {*} enemy
+     */
+    checkEnemyCollision(enemy) {
+        if (this.character.isColliding(enemy) && !this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken || enemy instanceof Endboss) && enemy.energy > 0) {
             this.playerInvincible();
         }
         if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0) {
@@ -68,7 +74,7 @@ class World {
             this.character.jump('low');
             setTimeout(() => {
                 this.deadEnemyDisappear(enemy);
-              }, 500);
+            }, 500);
         }
     }
 
@@ -79,18 +85,18 @@ class World {
     deadEnemyDisappear() {
         let deadEnemies = [];
         for (let i = 0; i < this.level.enemies.length; i++) {
-          let enemy = this.level.enemies[i];
-          if (enemy.energy <= 0) {
-            deadEnemies.push(i);
-          }
+            let enemy = this.level.enemies[i];
+            if (enemy.energy <= 0) {
+                deadEnemies.push(i);
+            }
         }
-      
+
         for (let i = deadEnemies.length - 1; i >= 0; i--) {
-          let j = deadEnemies[i];
-          this.level.enemies.splice(j, 1);
+            let j = deadEnemies[i];
+            this.level.enemies.splice(j, 1);
         }
-      }
-      
+    }
+
 
 
 
@@ -146,8 +152,8 @@ class World {
 
 
     /**
-    * bottle always throwed from player position && checks if u collected bottles before throwing
-    */
+     * bottle always throwed from player position && checks if u collected bottles before throwing
+     */
     checkThrowObjects() {
         if (this.keyboard.UP && this.character.collectableBottle > 0) {
             if (!this.throttled) {
@@ -163,9 +169,6 @@ class World {
             }
         }
     }
-
-
-
 
 
     /**
