@@ -36,6 +36,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.deleteThrowObject();
         }, 50);
     }
 
@@ -77,18 +78,17 @@ class World {
         if (enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround()) {
             enemy.energy -= 100;
             bottle.energy -= 100;
-           if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
-            setTimeout(() => {
-                this.deadEnemyDisappear(enemy);
-            }, 500);
-           }
-           if (enemy instanceof Endboss) {
-            this.endBossBar.percentage -= 20;
-            this.endBossBar.setPercentageEndbossBar(this.endBossBar.percentage);
-            console.log('Endboss HP', this.endBossBar.percentage)
-        }
+            if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+                setTimeout(() => {
+                    this.deadEnemyDisappear(enemy);
+                }, 500);
+            }
+            if (enemy instanceof Endboss) {
+                this.bottleHitsEndboss(enemy, bottle);
+            }
         };
     }
+
 
 
     /**
@@ -106,8 +106,10 @@ class World {
     /**
      * check if throwable Object hits Endboss
      */
-    bottleHitsEndboss() {
-       
+    bottleHitsEndboss(enemy, bottle) {
+        this.endBossBar.percentage -= 20;
+        this.endBossBar.setPercentageEndbossBar(this.endBossBar.percentage);
+        bottle.speedY = enemy;
     }
 
 
@@ -148,10 +150,27 @@ class World {
     }
 
 
+    /**
+     * deletes the throwable bottles if they splashed
+     */
+    deleteThrowObject() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            if (this.throwableObjects[i].energy == 0 && !this.throwableObjects[i].deleted || !this.throwableObjects[i].isAboveGround() && !this.throwableObjects[i].deleted) {
+                this.throwableObjects[i].deleted = true;
+                setTimeout(() => {
+                    if (this.throwableObjects[i].deleted) {
+                        this.throwableObjects.splice(i, 1)
+                    }
+                }, 500);
+            }
+        }
+    }
+
+
 
 
     /**
-     * check Player Collision with enemies && after hit Player is for 1 s invincible && update healtbar
+     * check Player Collision with enemies && after hit Player is for 1 s invincible && update healthbar
      */
     playerInvincible() {
         if (!this.invincible) {
@@ -214,7 +233,7 @@ class World {
                 this.throttled = true;
 
                 setTimeout(() => {
-                    this.throttled = false;
+                    this.throttled = false; // allows Player to throw 1 Bottle every 500ms
                 }, 500);
             }
         }
@@ -246,7 +265,7 @@ class World {
         this.ctx.translate(this.camera_x, 0); // Status Bar's stays left top corner in the Screen
 
         this.ctx.translate(-this.camera_x, 0);
-        // Draw() wird immer wieder aufgerufen!
+        // executes Draw() again and again!
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
