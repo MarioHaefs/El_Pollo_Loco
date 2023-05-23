@@ -138,7 +138,7 @@ class World {
         let deadEnemies = [];
         for (let i = 0; i < this.level.enemies.length; i++) {
             let enemy = this.level.enemies[i];
-            if (enemy.energy <= 0) {
+            if (enemy.energy <= 0 && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
                 deadEnemies.push(i);
             }
         }
