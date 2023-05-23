@@ -14,13 +14,13 @@ class ThrowableObject extends MovableObject {
         'assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
+    speedX = 7;
     offset = {
-        top: 30,
-        left: 30,
-        bottom: 30,
-        right: 30
+        top: 25,
+        left: 25,
+        bottom: 25,
+        right: 25
     };
-
 
 
     constructor(x, y) {
@@ -47,7 +47,7 @@ class ThrowableObject extends MovableObject {
         }, 100);
 
         setInterval(() => {
-            if (this.isHurt() || !this.isAboveGround()) {
+            if (this.energy <= 0 || !this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
             }
         }, 200);
@@ -61,7 +61,7 @@ class ThrowableObject extends MovableObject {
         this.speedY = 30;
         this.applyGravity();
         setInterval(() => {
-            this.x += 8;
+            this.x += this.speedX;
         }, 25);
     }
 }

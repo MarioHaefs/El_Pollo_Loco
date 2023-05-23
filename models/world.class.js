@@ -10,7 +10,6 @@ class World {
     bottleBar = new BottleBar();
     endBossBar = new EndbossBar();
     throwableObjects = [];
-    audio = true;
 
 
     constructor(canvas) {
@@ -53,11 +52,62 @@ class World {
         this.checkBottleCollision();
         this.checkCoinCollision();
         this.checkThrowObjects();
+        this.checkThrowableObjectCollision();
     }
 
 
+    /**
+     * this function checks the collision with throwable objects & play the bottle sound
+     */
     checkThrowableObjectCollision() {
-        
+        this.throwableObjects.forEach(bottle => {
+            this.level.enemies.forEach(enemy => {
+                this.bottleHitsEnemy(enemy, bottle);
+                this.bottleHitsGround(bottle);
+            });
+        });
+    }
+
+    /**
+     * check if throwable Object hits enemies
+     * @param {*} enemy  enemy 
+     * @param {*} bottle  ThrowableObject 
+     */
+    bottleHitsEnemy(enemy, bottle) {
+        if (enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround()) {
+            enemy.energy -= 100;
+            bottle.energy -= 100;
+           if (enemy instanceof Chicken || enemy instanceof SmallChicken) {
+            setTimeout(() => {
+                this.deadEnemyDisappear(enemy);
+            }, 500);
+           }
+           if (enemy instanceof Endboss) {
+            this.endBossBar.percentage -= 20;
+            this.endBossBar.setPercentageEndbossBar(this.endBossBar.percentage);
+            console.log('Endboss HP', this.endBossBar.percentage)
+        }
+        };
+    }
+
+
+    /**
+    * check if throwable Object hits the ground
+    * @param {*} bottle ThrowableObject
+    */
+    bottleHitsGround(bottle) {
+        if (!bottle.isAboveGround()) {
+            bottle.energy -= 100;
+            bottle.speedX = 0;
+        }
+    }
+
+
+    /**
+     * check if throwable Object hits Endboss
+     */
+    bottleHitsEndboss() {
+       
     }
 
 
@@ -71,7 +121,7 @@ class World {
         }
         if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0) {
             enemy.energy -= 100;
-            this.character.jump('low');
+            this.character.lowJump();
             setTimeout(() => {
                 this.deadEnemyDisappear(enemy);
             }, 500);

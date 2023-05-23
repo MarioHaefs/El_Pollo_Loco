@@ -14,7 +14,7 @@ class EndbossBar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES_ENDBOSSBAR);
-        this.setPercentageHealthBar(100);
+        this.setPercentageEndbossBar(100);
         this.x = 515;
         this.y = 0;
         this.height = 50;
@@ -23,10 +23,10 @@ class EndbossBar extends DrawableObject {
     
 
     /**
-     * 
+     * show
      * @param {% of Healthbar} percentage
      */
-    setPercentageHealthBar(percentage) {
+    setPercentageEndbossBar(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES_ENDBOSSBAR[this.resolveImageIndex()];
         this.img = this.imageCache[path];
