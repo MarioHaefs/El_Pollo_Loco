@@ -150,4 +150,30 @@ class MovableObject extends DrawableObject {
     lowJump() {
         this.speedY = 15;
     }
+
+
+    /**
+     * Chicken fall on his right position
+     */
+    isAboveGroundChicken() {
+        if (this instanceof SmallChicken) { 
+            return this.y < 360;
+        } else if (this instanceof Chicken) {
+            return this.y < 330;
+        }
+    }
+
+
+    /**
+     * if Chicken is in the air apply Gravity and let him fall
+     */
+    applyGravityChicken() {
+        setInterval(() => {
+            if (this.isAboveGroundChicken() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            }
+        }, 1000 / 25);
+    }
+
 }
