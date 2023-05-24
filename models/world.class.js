@@ -226,7 +226,7 @@ class World {
      * bottle always throwed from player position && checks if u collected bottles before throwing
      */
     checkThrowObjects() {
-        if (this.keyboard.UP && this.character.collectableBottle > 0) {
+        if (this.keyboard.UP && this.character.collectableBottle > 0 && !this.character.otherDirection) {
             if (!this.throttled) {
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
@@ -319,7 +319,6 @@ class World {
      * @param {Movable Object} mo 
      */
     mirrorImage(mo) {
-        this.mirrorPlayer = true;
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
         this.ctx.scale(-1, 1);
@@ -332,7 +331,6 @@ class World {
      * @param {Movable Object} mo 
      */
     mirrorImageBack(mo) {
-        this.mirrorPlayer = false;
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
