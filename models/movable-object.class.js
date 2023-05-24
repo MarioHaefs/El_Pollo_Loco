@@ -7,6 +7,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     collectableBottle = 0;
     collectableCoin = 0;
+    mirrorPlayer = false;
     offset = {
         top: 0,
         left: 0,
