@@ -25,6 +25,7 @@ class Chicken extends MovableObject {
      * animate movement of the chicken && let chicken move to left side of the map && dead animation
      */
     animate() {
+
         setInterval(() => {
             this.moveLeft();
         }, 1000 / 60);

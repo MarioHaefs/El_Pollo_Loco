@@ -10,6 +10,15 @@ class World {
     bottleBar = new BottleBar();
     endBossBar = new EndbossBar();
     throwableObjects = [];
+    splash_sound = new Audio('audio/bottle.mp3');
+    chicken_sound = new Audio('audio/chicken.mp3');
+    crushed_sound = new Audio('audio/smallChicken.mp3');
+    coin_sound = new Audio('audio/coin.mp3');
+    game_sound = new Audio('audio/game.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3'); 
+    collectBottle_sound = new Audio('audio/collectBottle.mp3'); 
+    
+    
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -81,12 +90,14 @@ class World {
             setTimeout(() => {
                 this.deadEnemyDisappear(enemy);
             }, 500);
+            this.splash_sound.play();
         }
         if (enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround() && enemy instanceof Endboss) {
             this.bottleHitsEndboss(enemy, bottle);
             enemy.hit();
             bottle.energy -= 100;
             enemy.isHurt();
+            this.splash_sound.play();
         }
     };
 
@@ -101,6 +112,7 @@ class World {
         if (!bottle.isAboveGround()) {
             bottle.energy -= 100;
             bottle.speedX = 0;
+            this.splash_sound.play();
         }
     }
 
@@ -112,6 +124,8 @@ class World {
         this.endBossBar.percentage -= 20;
         this.endBossBar.setPercentageEndbossBar(this.endBossBar.percentage);
         bottle.speedY = enemy;
+        this.chicken_sound.volume = 0.3;
+        this.chicken_sound.play();
     }
 
 
@@ -125,6 +139,7 @@ class World {
         }
         if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0) {
             enemy.energy -= 100;
+            this.crushed_sound.play();
             this.character.lowJump();
             setTimeout(() => {
                 this.deadEnemyDisappear(enemy);
@@ -180,6 +195,7 @@ class World {
                 if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     this.statusBar.setPercentageHealthBar(this.character.energy);
+                    this.hurt_sound.play();
 
                     this.invincible = true; // Player can't be hit for 1 s
                     setTimeout(() => {
@@ -202,6 +218,8 @@ class World {
                 this.level.bottles.splice(i, 1);
                 this.character.collectBottle();
                 this.bottleBar.setPercentageBottleBar(this.character.collectableBottle);
+                this.collectBottle_sound.volume = 0.2;
+                this.collectBottle_sound.play();
             }
         }
     }
@@ -217,6 +235,8 @@ class World {
                 this.level.coins.splice(i, 1);
                 this.character.collectCoin();
                 this.coinBar.setPercentageCoinBar(this.character.collectableCoin);
+                this.coin_sound.volume = 0.2;
+                this.coin_sound.play();
             }
         }
     }

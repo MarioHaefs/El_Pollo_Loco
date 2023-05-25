@@ -69,6 +69,7 @@ class Character extends MovableObject {
         right: 40
     };
     walking_sound = new Audio('audio/walking.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
 
 
 
@@ -109,6 +110,8 @@ class Character extends MovableObject {
             if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
                 this.setLastMoveTime()
+                this.jump_sound.volume = 0.3;
+                this.jump_sound.play();
             }
 
             this.world.camera_x = -this.x + 100;
