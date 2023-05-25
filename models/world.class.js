@@ -14,11 +14,10 @@ class World {
     chicken_sound = new Audio('audio/chicken.mp3');
     crushed_sound = new Audio('audio/smallChicken.mp3');
     coin_sound = new Audio('audio/coin.mp3');
-    game_sound = new Audio('audio/game.mp3');
-    hurt_sound = new Audio('audio/hurt.mp3'); 
-    collectBottle_sound = new Audio('audio/collectBottle.mp3'); 
-    
-    
+    hurt_sound = new Audio('audio/hurt.mp3');
+    collectBottle_sound = new Audio('audio/collectBottle.mp3');
+
+
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -46,6 +45,7 @@ class World {
             this.checkCollisions();
             this.deleteThrowObject();
             this.chickenAttack();
+            this.activateEndboss();
         }, 50);
     }
 
@@ -263,6 +263,18 @@ class World {
 
 
     /**
+     * triggert the chicken rush attack
+     */
+    activateEndboss() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.x - this.character.x < 500 && enemy.energy > 0 && enemy instanceof Endboss) {
+                enemy.speed = 3;
+            }
+        })
+    }
+
+
+    /**
      * this function triggert the chicken rush attack
      */
     chickenAttack() {
@@ -293,9 +305,11 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
-        if (this.character.x >= 1500) {
-            this.addToMap(this.endBossBar);
-        }
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.x - this.character.x < 500 && enemy.energy > 0 && enemy instanceof Endboss) {
+                this.addToMap(this.endBossBar);
+            }
+        });
         this.ctx.translate(this.camera_x, 0); // Status Bar's stays left top corner in the Screen
 
         this.ctx.translate(-this.camera_x, 0);
