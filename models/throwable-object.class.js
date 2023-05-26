@@ -15,7 +15,6 @@ class ThrowableObject extends MovableObject {
         'assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
     speedX = 7;
-    throw_sound = new Audio('audio/throw.mp3');
     offset = {
         top: 25,
         left: 25,
@@ -64,6 +63,5 @@ class ThrowableObject extends MovableObject {
         setInterval(() => {
             this.x += this.speedX;
         }, 25);
-        this.throw_sound.play();
     }
 }

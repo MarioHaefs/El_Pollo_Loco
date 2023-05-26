@@ -77,3 +77,21 @@ canvas {
     display: flex;
     justify-content: center;  
 }
+
+.settings-nav {
+    position: absolute;
+    right: 9px;
+    top: 9px;
+    z-index: 20;
+}
+
+.settings-btn {
+    cursor: pointer;
+    margin-left: 5px;
+    height: 32px;
+    width: 32px;
+}
+
+.settings-btn:hover {
+    transform: scale(1.05);
+}

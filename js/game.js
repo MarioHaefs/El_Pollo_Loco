@@ -1,26 +1,17 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
-game_sound = new Audio('audio/game.mp3');
+
 
 /**
  * draws the whole World into the Canvas --> starts the Game
  */
 function init() {
     hideStartscreen();
-    playIngameBackgroundMusic();
+    showVolumeBtn();
     canvas = document.getElementById('canvas');
     initLevel();
     world = new World(canvas, keyboard);
-}
-
-
-/**
- * plays the main ingame Theme
- */
-function playIngameBackgroundMusic() {
-    this.game_sound.volume = 0.03;
-    this.game_sound.play();
 }
 
 
@@ -29,6 +20,35 @@ function playIngameBackgroundMusic() {
  */
 function hideStartscreen() {
     document.getElementById('startscreen').classList.add('d-none');
+}
+
+
+/**
+ * show Volume Button
+ */
+function showVolumeBtn() {
+    document.getElementById('volume').classList.remove('d-none');
+}
+
+
+/**
+ * mute the game audio
+ */
+function volumeMute() {
+    world.audio = false;
+    let volume = document.getElementById('volume');
+    volume.src = 'assets/img/sound-off.png';
+    volume.setAttribute('onclick', 'volumeUp()');
+}
+
+/**
+ * turn the audio on
+ */
+function volumeUp() {
+    world.audio = true;
+    let volume = document.getElementById('volume');
+    volume.src = 'assets/img/sound.png';
+    volume.setAttribute('onclick', 'volumeMute()');
 }
 
 
