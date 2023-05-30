@@ -41,7 +41,7 @@
 
         <div class="settings-nav">
             <img id="volume" onclick="volumeMute()" class="settings-btn d-none" src="assets/img/sound.png">
-            <img class="settings-btn" src="assets/img/settings.png">
+            <img onclick="showSettings()" class="settings-btn" src="assets/img/settings.png">
             <img onclick="fullscreen()" class="settings-btn" src="assets/img/fullscreen.png">
         </div>
 
@@ -49,6 +49,28 @@
             <img class="bg-image" src="assets/img/9_intro_outro_screens/start/startscreen_2.png">
             <div class="button-div">
                 <button onclick="init()" class="start-button">Start</button>
+            </div>
+        </div>
+
+        <div id="settings" class="controls d-none">
+            <div class="controls-content">
+                <h2>Controls & Rules</h2>
+                <div class="controls-center">
+                    <img class="arrow-keys" src="assets/img/left-key.png">
+                    <img class="arrow-keys" src="assets/img/right-key.png">
+                    <span class="space-left">Move</span>
+                </div>
+                <div class="controls-center">
+                    <img class="arrow-keys" src="assets/img/up-key.png">
+                    <span class="space-left">Throw</span>
+                </div>
+                <div class="controls-center">
+                    <img src="assets/img/space-key.png">
+                    <span class="space-left">Jump</span>
+                </div>
+                <div class="controls-center">
+                    <span>Collect all Coins and fry Señora Gallina with Hot Sauce</span>
+                </div>
             </div>
         </div>
 

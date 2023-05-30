@@ -2,6 +2,7 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let fullscreenMode = false;
+let hideSettings = true;
 
 
 /**
@@ -32,6 +33,19 @@ function showVolumeBtn() {
 }
 
 
+function showSettings() {
+    let settings = document.getElementById('settings');
+
+    if (hideSettings) {
+        settings.classList.remove('d-none');
+        hideSettings = false;
+    } else if (!hideSettings) {
+        settings.classList.add('d-none');
+        hideSettings = true;
+    } 
+}
+
+
 /**
  * enter/exit Fullscreen Mode
  */
@@ -45,6 +59,18 @@ function fullscreen() {
         fullscreenMode = false;
     }
 }
+
+
+/**
+ * set the fullscreenMode Var to false if Fullscreen exits with ESC Button
+ */
+function exitFullscreenHandler() {
+    if (!document.fullscreenElement) {
+        fullscreenMode = false;
+    }
+}
+
+document.addEventListener('fullscreenchange', exitFullscreenHandler);
 
 
 /**

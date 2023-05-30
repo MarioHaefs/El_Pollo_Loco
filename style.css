@@ -100,3 +100,45 @@ canvas {
 .settings-btn:hover {
     transform: scale(1.05);
 }
+
+.controls {
+    background-color: #e97c4a;
+    z-index: 9999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 300px;
+    border-radius: 20px;
+    border-style: solid;
+}
+
+.arrow-keys {
+    height: 36px;
+}
+
+.controls-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    letter-spacing: 1px;
+    font-size: 20px;
+}
+
+.controls-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.space-left {
+    margin-left: 24px; 
+}
+
+h2 {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
