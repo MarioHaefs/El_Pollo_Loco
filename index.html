@@ -36,12 +36,13 @@
     <h1>El Pollo Loco</h1>
 
     <div id="content">
+
         <canvas id="canvas" width="720" height="480"></canvas>
 
         <div class="settings-nav">
             <img id="volume" onclick="volumeMute()" class="settings-btn d-none" src="assets/img/sound.png">
             <img class="settings-btn" src="assets/img/settings.png">
-            <img class="settings-btn" src="assets/img/fullscreen.png">
+            <img onclick="fullscreen()" class="settings-btn" src="assets/img/fullscreen.png">
         </div>
 
         <div id="startscreen" class="intro-img">
@@ -52,13 +53,6 @@
         </div>
 
     </div>
-
-
-
-
-
-
-
 
 
 </body>

@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let fullscreenMode = false;
 
 
 /**
@@ -28,6 +29,21 @@ function hideStartscreen() {
  */
 function showVolumeBtn() {
     document.getElementById('volume').classList.remove('d-none');
+}
+
+
+/**
+ * enter/exit Fullscreen Mode
+ */
+function fullscreen() {
+    let fullscreen = document.getElementById('content');
+    if (!fullscreenMode) {
+        fullscreen.requestFullscreen();
+        fullscreenMode = true;
+    } else {
+        document.exitFullscreen();
+        fullscreenMode = false;
+    }
 }
 
 
