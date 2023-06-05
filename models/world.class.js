@@ -18,6 +18,8 @@ class World {
     collectBottle_sound = new Audio('audio/collectBottle.mp3');
     throw_sound = new Audio('audio/throw.mp3');
     game_sound = new Audio('audio/game.mp3');
+    win_sound = new Audio('audio/win.mp3');
+    lost_sound = new Audio('audio/lose.mp3');
     audio = true;
 
 
@@ -50,7 +52,53 @@ class World {
             this.chickenAttack();
             this.activateEndboss();
             this.playIngameBackgroundMusic();
+            this.checkWinGame();
+            this.checkLostGame();
         }, 50);
+    }
+
+
+    /**
+     * check if Player success and win Game
+     */
+    checkWinGame() {
+        let gameOver = document.getElementById('game-over');
+        if (this.character.energy > 0 && this.character.collectableCoin == 100 && this.endBossBar.percentage == 0) {
+            gameOver.classList.remove('d-none');
+            setTimeout(() => {
+                if (this.audio) {
+                    this.win_sound.play();
+                }
+                this.game_sound.pause();
+                this.clearAllIntervals();
+            }, 500);
+        }
+    }
+
+
+    /**
+     * check if Player failed and lost Game
+     */
+    checkLostGame() {
+        let lostGame = document.getElementById('lost-game');
+        if (this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0) {
+            lostGame.classList.remove('d-none');
+            setTimeout(() => {
+                if (this.audio) {
+                    this.lost_sound.play();
+                }
+                this.game_sound.pause();
+                this.clearAllIntervals();
+            }, 500);
+        }
+    }
+
+
+    /**
+     * clear all Intervals in the Game
+     */
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
 
 
