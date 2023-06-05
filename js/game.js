@@ -23,8 +23,18 @@ function init() {
 function restartGame() {
     hideEndscreen();
     changeVolumeImg();
+    stopAudio();
     initLevel();
     world = new World(canvas, keyboard);
+}
+
+
+/**
+ * stop win or lose sound if restart Game
+ */
+function stopAudio() {
+    world.win_sound.pause();
+    world.lost_sound.pause();
 }
 
 
@@ -73,7 +83,7 @@ function showSettings() {
     } else if (!hideSettings) {
         settings.classList.add('d-none');
         hideSettings = true;
-    } 
+    }
 }
 
 

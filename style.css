@@ -135,10 +135,53 @@ canvas {
 }
 
 .space-left {
-    margin-left: 24px; 
+    margin-left: 24px;
 }
 
 h2 {
     font-size: 27px;
     margin-bottom: 8px;
+}
+
+.turn {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 2px;
+    font-size: 2rem;
+    height: 100svh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 99999;
+    color: #fff;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+
+    .turn {
+        display: flex;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    canvas {
+        height: 100svh;
+        width: 100%;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    .turn {
+        display: none;
+    }
 }
