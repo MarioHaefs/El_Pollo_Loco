@@ -59,12 +59,13 @@ class World {
 
 
     /**
-     * check if Player success and win Game
+     * check if Player successed and win Game
      */
     checkWinGame() {
         let gameOver = document.getElementById('game-over');
         if (this.character.energy > 0 && this.character.collectableCoin == 100 && this.endBossBar.percentage == 0) {
             gameOver.classList.remove('d-none');
+            hideControls();
             setTimeout(() => {
                 if (this.audio) {
                     this.win_sound.play();
@@ -77,12 +78,13 @@ class World {
 
 
     /**
-     * check if Player failed and lost Game
+     * check if Player failed and lose Game
      */
     checkLostGame() {
         let lostGame = document.getElementById('lost-game');
         if (this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0) {
             lostGame.classList.remove('d-none');
+            hideControls();
             setTimeout(() => {
                 if (this.audio) {
                     this.lost_sound.play();

@@ -18,10 +18,38 @@ function init() {
 
 
 /**
- * hide startscreen
+ * restart Game after finished it once
+ */
+function restartGame() {
+    hideEndscreen();
+    changeVolumeImg();
+    initLevel();
+    world = new World(canvas, keyboard);
+}
+
+
+/**
+ * hide Startscreen
  */
 function hideStartscreen() {
     document.getElementById('startscreen').classList.add('d-none');
+}
+
+
+/**
+ * hide Endscreen
+ */
+function hideEndscreen() {
+    document.getElementById('game-over').classList.add('d-none');
+    document.getElementById('lost-game').classList.add('d-none');
+}
+
+
+/**
+ * hide Controls (used if you lose or win game and u have settings still displayed)
+ */
+function hideControls() {
+    document.getElementById('settings').classList.add('d-none');
 }
 
 
@@ -33,6 +61,9 @@ function showVolumeBtn() {
 }
 
 
+/**
+ * display and hide Game Settings
+ */
 function showSettings() {
     let settings = document.getElementById('settings');
 
@@ -91,6 +122,15 @@ function volumeUp() {
     let volume = document.getElementById('volume');
     volume.src = 'assets/img/sound.png';
     volume.setAttribute('onclick', 'volumeMute()');
+}
+
+
+/**
+ * change img of volume if game ends with audio turned off
+ */
+function changeVolumeImg() {
+    let volume = document.getElementById('volume');
+    volume.src = 'assets/img/sound.png';
 }
 
 
