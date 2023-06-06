@@ -17,6 +17,7 @@ h1 {
 
 #content {
     position: relative;
+    max-height: 100vh;
 }
 
 canvas {
@@ -161,6 +162,22 @@ h2 {
     color: #fff;
 }
 
+.mobile-btn-position-LR {
+    position: absolute;
+    bottom: 10px;
+    left: 20px;
+    display: none;
+    z-index: 5000;
+}
+
+.mobile-btn-position-JT {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    display: none;
+    z-index: 5000;
+}
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
@@ -173,7 +190,7 @@ h2 {
 
 @media only screen and (max-height: 600px) {
     canvas {
-        height: 100svh;
+        height: 99.3svh;
         width: 100%;
     }
 
@@ -184,4 +201,33 @@ h2 {
     .turn {
         display: none;
     }
+}
+
+@media (hover: none) {
+    .mobile-btn-position-LR {
+       display: block;
+    }
+    
+    .mobile-btn-position-JT {
+        display: block;
+    }
+}
+
+@media only screen and (max-height: 400px) {
+    .settings-btn {
+        height: 24px;
+        width: 24px;
+    }
+
+    .button-div {
+        bottom: 15px;
+    }
+}
+
+@media only screen and (max-height: 750px) {
+   h1 {
+    margin-top: 25px;
+    margin-bottom: 25px;
+   }
+
 }

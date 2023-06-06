@@ -22,10 +22,10 @@ function init() {
  */
 function restartGame() {
     hideEndscreen();
+    hideVolumeBtn();
+    showStartscreen();
     changeVolumeImg();
     stopAudio();
-    initLevel();
-    world = new World(canvas, keyboard);
 }
 
 
@@ -43,6 +43,14 @@ function stopAudio() {
  */
 function hideStartscreen() {
     document.getElementById('startscreen').classList.add('d-none');
+}
+
+
+/**
+ * show Startscreen
+ */
+function showStartscreen() {
+    document.getElementById('startscreen').classList.remove('d-none');
 }
 
 
@@ -68,6 +76,14 @@ function hideControls() {
  */
 function showVolumeBtn() {
     document.getElementById('volume').classList.remove('d-none');
+}
+
+
+/**
+ * hide Volume Button
+ */
+function hideVolumeBtn() {
+    document.getElementById('volume').classList.add('d-none');
 }
 
 
@@ -142,51 +158,3 @@ function changeVolumeImg() {
     let volume = document.getElementById('volume');
     volume.src = 'assets/img/sound.png';
 }
-
-
-/**
- * bind keyboard buttons to variables --> controls to play the Game
- */
-window.addEventListener("keydown", (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-
-    if (e.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-
-    if (e.keyCode == 38) {
-        keyboard.UP = true;
-    }
-
-    if (e.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-
-    if (e.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-});
-
-window.addEventListener("keyup", (e) => {
-    if (e.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (e.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (e.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (e.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-
-    if (e.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-});
