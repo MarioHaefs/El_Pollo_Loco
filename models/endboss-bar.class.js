@@ -20,10 +20,10 @@ class EndbossBar extends DrawableObject {
         this.height = 50;
         this.width = 200;
     }
-    
+
 
     /**
-     * show
+     * show percentage of endboss-healthbar
      * @param {% of Healthbar} percentage
      */
     setPercentageEndbossBar(percentage) {
@@ -35,8 +35,8 @@ class EndbossBar extends DrawableObject {
 
 
     /**
-     * 
-     * @returns return value which image shows on which % of status bar
+     * check which img shows at endboss bar
+     * @returns return value which image shows on which % of endboss health bar
      */
     resolveImageIndex() {
         if (this.percentage == 100) {

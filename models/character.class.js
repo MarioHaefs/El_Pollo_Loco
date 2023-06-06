@@ -87,64 +87,120 @@ class Character extends MovableObject {
     }
 
     /**
-     * let Character Pepe walk on press key left or right && play walking sound && let Pepe jump on SPACE
+     * animate all of players interactions in the game && play interaction sounds 
      */
     animate() {
-        setInterval(() => {
-            this.walking_sound.pause();
+        setInterval(() => this.moveCharacter(), 1000 / 60);
 
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.setLastMoveTime()
-                this.otherDirection = false;
-                if (this.world.audio) {
-                    this.walking_sound.play();
-                }
-            }
+        setInterval(() => this.animateCharacter(), 100);
+    }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.setLastMoveTime()
-                this.otherDirection = true;
-                if (this.world.audio) {
-                    this.walking_sound.play();
-                }
-            }
 
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.setLastMoveTime()
-                if (this.world.audio) {
-                    this.jump_sound.volume = 0.3;
-                    this.jump_sound.play();
-                }
-            }
+    /**
+     * player movement on control key press
+     */
+    moveCharacter() {
+        this.walking_sound.pause();
 
-            this.world.camera_x = -this.x + 100;
-        }, 1000 / 60);
+        if (this.canMoveRight()) {
+            this.playerMoveRight();
+        }
 
-        setInterval(() => {
-            if (this.isDead()) {
-                //Dead Animation
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (this.isHurt()) {
-                //Hurt Animation
-                this.playAnimation(this.IMAGES_HURT);
-            } else if
-                (this.isAboveGround()) {
-                //Jump Animation :
-                this.playAnimation(this.IMAGES_JUMPING);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                //Walk Animation :
-                this.playAnimation(this.IMAGES_WALKING);
-            } else if (this.checkIdleTime()) {
-                //Long Idle Animation :
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-            } else {
-                //Idle Animation :
-                this.playAnimation(this.IMAGES_IDLE);
-            }
-        }, 100);
+        if (this.canMoveLeft()) {
+            this.playerMoveLeft();
+        }
+
+        if (this.canJump()) {
+            this.playerJump();
+        }
+
+        this.world.camera_x = -this.x + 100;
+    }
+
+
+    /**
+     * can player move right?
+     * @returns conditions so that the player can move right
+     */
+    canMoveRight() {
+        return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x
+    }
+
+
+    /**
+     * player moves right && play walking sound
+     */
+    playerMoveRight() {
+        this.moveRight();
+        this.setLastMoveTime()
+        this.otherDirection = false;
+        if (this.world.audio) {
+            this.walking_sound.play();
+        }
+    }
+
+
+    /**
+     * can player move left?
+     * @returns conditions so that the player can move left
+     */
+    canMoveLeft() {
+        return this.world.keyboard.LEFT && this.x > 0
+    }
+
+
+    /**
+     * player moves left && play walking sound
+     */
+    playerMoveLeft() {
+        this.moveLeft();
+        this.setLastMoveTime()
+        this.otherDirection = true;
+        if (this.world.audio) {
+            this.walking_sound.play();
+        }
+    }
+
+
+    /**
+     * can player jump?
+     * @returns conditions so that the player can jump
+     */
+    canJump() {
+        return this.world.keyboard.SPACE && !this.isAboveGround()
+    }
+
+
+    /**
+     * player jump && play jumping sound
+     */
+    playerJump() {
+        this.jump();
+        this.setLastMoveTime()
+        if (this.world.audio) {
+            this.jump_sound.volume = 0.3;
+            this.jump_sound.play();
+        }
+    }
+
+
+    /**
+     * animate all interactions of player
+     */
+    animateCharacter() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_JUMPING);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.IMAGES_WALKING);
+        } else if (this.checkIdleTime()) {
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        } else {
+            this.playAnimation(this.IMAGES_IDLE);
+        }
     }
 
 

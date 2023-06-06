@@ -37,7 +37,7 @@ class SmallChicken extends MovableObject {
             }
         }, 200)
 
-        let minSeconds = 2; 
+        let minSeconds = 2;
         let maxSeconds = 6;
 
         let randomSeconds = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;

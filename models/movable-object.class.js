@@ -29,7 +29,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Player collides or get hit --> his health reduces && saves time for isHurt()
+     * if player collides or get hit --> his health reduces && saves time for isHurt()
      */
     hit() {
         this.energy -= 20;
@@ -42,7 +42,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Player collides with Bottle he fill the bar
+     * if player collides with bottle he fill bottlebar
      */
     collectBottle() {
         this.collectableBottle += 10;
@@ -53,7 +53,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Player collides with Coin he fill the bar
+     * if player collides with coin he fill coinbar
      */
     collectCoin() {
         this.collectableCoin += 10;
@@ -64,7 +64,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Player get hurt play hurt Animation 
+     * if player gets hurt last hit time 
      */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; // difference in ms
@@ -74,7 +74,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * checks if Character is dead
+     * checks if character is dead
      */
     isDead() {
         return this.energy == 0;
@@ -82,7 +82,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Character is in the air apply Gravity and let him fall
+     * if character is in the air apply gravity and let him fall
      */
     applyGravity() {
         setInterval(() => {
@@ -95,7 +95,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * 
+     * checks if a object or player is above ground
      * @returns position of Pepe 
      */
     isAboveGround() {
@@ -108,11 +108,11 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * load several img of Pepe and Enemies in a interval loop --> this makes it look like an Animation
+     * load several img of Pepe and enemies in a interval loop --> animated
      * @param {array of images for smooth animation} images 
      */
     playAnimation(images) {
-        let loop = this.currentImage % images.length; // % = Moduli, damit er nicht auf die Zahlen 6,7,8,etc. geht und somit abschmiert, sondern sich wiederholt wie ein Loop.
+        let loop = this.currentImage % images.length;
         let path = images[loop];
         this.img = this.imageCache[path];
         this.currentImage++;
@@ -120,7 +120,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * move Movable Object left
+     * move movable object left
      */
     moveLeft() {
         this.x -= this.speed;
@@ -128,7 +128,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * move Movable Object right
+     * move movable object right
      */
     moveRight() {
         this.x += this.speed;
@@ -136,7 +136,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * let Character jump
+     * let character jump
      */
     jump() {
         this.speedY = 28;
@@ -144,7 +144,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * low Jump() used by Player if he kills enemies && small Chicken
+     * lowJump() used by player if he kills enemies && small Chicken
      */
     lowJump() {
         this.speedY = 15;
@@ -152,10 +152,10 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * Chicken fall on his right position
+     * chicken fall on his right position
      */
     isAboveGroundChicken() {
-        if (this instanceof SmallChicken) { 
+        if (this instanceof SmallChicken) {
             return this.y < 360;
         } else if (this instanceof Chicken) {
             return this.y < 330;
@@ -164,7 +164,7 @@ class MovableObject extends DrawableObject {
 
 
     /**
-     * if Chicken is in the air apply Gravity and let him fall
+     * if chicken are in the air apply gravity and let them fall
      */
     applyGravityChicken() {
         setInterval(() => {

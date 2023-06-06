@@ -50,7 +50,7 @@ class Endboss extends MovableObject {
 
 
     /**
-     * play alert animation of boss chicken
+     * play animations of endboss
      */
     animate() {
 
@@ -59,18 +59,25 @@ class Endboss extends MovableObject {
         }, 1000 / 60);
 
         setInterval(() => {
-            if (this.isDead()) {
-                //Dead Animation
-                this.playAnimation(this.IMAGES_ENDBOSS_DEATH);
-                this.speed = 0;
-            } else if (this.isHurt()) {
-                //Hurt Animation
-                this.playAnimation(this.IMAGES_ENDBOSS_HURT);
-                this.speed = 0;
-            } else  {
-                this.playAnimation(this.IMAGES_ENDBOSS_WALKING);
-                this.speed = 0;
-            }
+            this.animateEndboss();
         }, 200);
     }
+
+
+    /**
+     * animate all interactions of endboss
+     */
+    animateEndboss() {
+        if (this.isDead()) {
+            this.playAnimation(this.IMAGES_ENDBOSS_DEATH);
+            this.speed = 0;
+        } else if (this.isHurt()) {
+            this.playAnimation(this.IMAGES_ENDBOSS_HURT);
+            this.speed = 0;
+        } else {
+            this.playAnimation(this.IMAGES_ENDBOSS_WALKING);
+            this.speed = 0;
+        }
+    }
+
 }

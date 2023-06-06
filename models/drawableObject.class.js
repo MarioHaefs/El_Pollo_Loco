@@ -9,16 +9,16 @@ class DrawableObject {
 
 
     /**
-    * helping function for addToMap() in world class
-    * @param {Canvas.getContext('2d')} ctx 
-    */
+     * helping function for addToMap() in world class
+     * @param {Canvas.getContext('2d')} ctx 
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
 
     /**
-     * load static Image into the World
+     * load static image into the world
      * @param {path to the image} path 
      */
     loadImage(path) {
@@ -28,9 +28,9 @@ class DrawableObject {
 
 
     /**
-    * preload Array of Images into the World --> more images for animation
-    * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
-    */
+     * preload array of images into the world --> more images for animation
+     * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -41,7 +41,7 @@ class DrawableObject {
 
 
     /**
-     * helping function for addToMap() in world class. Function: draw frame around Character and Chicken
+     * helping function for addToMap() in world class. function: draw frame around character and chicken
      * @param {Canvas.getContext('2d')} ctx 
      */
     drawFrame(ctx) {

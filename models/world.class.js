@@ -23,7 +23,6 @@ class World {
     audio = true;
 
 
-
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -35,7 +34,7 @@ class World {
 
 
     /**
-     * set the var world in character.class.js to this world
+     * set the var = world in "character.class.js" to this world
      */
     setWorld() {
         this.character.world = this;
@@ -43,7 +42,7 @@ class World {
 
 
     /**
-     * run the Game with his Main Functions
+     * run the game && checks all important conditions
      */
     run() {
         setInterval(() => {
@@ -59,45 +58,79 @@ class World {
 
 
     /**
-     * check if Player successed and win Game
+     * check if player successed and win game
      */
     checkWinGame() {
         let gameOver = document.getElementById('game-over');
-        if (this.character.energy > 0 && this.character.collectableCoin == 100 && this.endBossBar.percentage == 0) {
+        if (this.playerBeatGame()) {
             gameOver.classList.remove('d-none');
             hideControls();
             setTimeout(() => {
-                if (this.audio) {
-                    this.win_sound.play();
-                }
-                this.game_sound.pause();
+                this.playWinSound();
                 this.clearAllIntervals();
-            }, 500);
+            }, 800);
         }
     }
 
 
     /**
-     * check if Player failed and lose Game
+     * checks if player won the game
+     * @returns conditions if player win
+     */
+    playerBeatGame() {
+        return this.character.energy > 0 && this.endBossBar.percentage == 0
+    }
+
+
+    /**
+     * play win game sound
+     */
+    playWinSound() {
+        if (this.audio) {
+            this.win_sound.play();
+        }
+        this.game_sound.pause();
+    }
+
+
+    /**
+     * check if player failed and lose game
      */
     checkLostGame() {
         let lostGame = document.getElementById('lost-game');
-        if (this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0) {
+        if (this.gameBeatPlayer()) {
             lostGame.classList.remove('d-none');
             hideControls();
             setTimeout(() => {
-                if (this.audio) {
-                    this.lost_sound.play();
-                }
-                this.game_sound.pause();
+                this.playLoseSound();
                 this.clearAllIntervals();
-            }, 500);
+            }, 800);
         }
     }
 
 
     /**
-     * clear all Intervals in the Game
+     * checks if player lose the game
+     * @returns conditions if player lose
+     */
+    gameBeatPlayer() {
+        return this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0
+    }
+
+
+    /**
+     * play lose game sound
+     */
+    playLoseSound() {
+        if (this.audio) {
+            this.lost_sound.play();
+        }
+        this.game_sound.pause();
+    }
+
+
+    /**
+     * clear all intervals in the game
      */
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
@@ -105,8 +138,8 @@ class World {
 
 
     /**
-    *  checks all collision Situations in the Game
-    */
+     *  checks all collision situations in the game
+     */
     checkCollisions() {
         if (!this.character.isHurt()) {
             this.level.enemies.forEach((enemy) => {
@@ -132,58 +165,91 @@ class World {
         });
     }
 
+
     /**
      * check if throwable Object hits enemies
-     * @param {*} enemy  enemy 
-     * @param {*} bottle  ThrowableObject 
+     * @param {enemy} enemy
+     * @param {ThrowableObject} bottle
      */
     bottleHitsEnemy(enemy, bottle) {
-        if (enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
+        if (this.bottleHitsNormalEnemy(enemy, bottle)) {
             enemy.energy -= 100;
             bottle.energy -= 100;
             setTimeout(() => {
                 this.deadEnemyDisappear(enemy);
             }, 500);
-            if (this.audio) {
-                this.splash_sound.play();
-            }
+
         }
-        if (enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround() && enemy instanceof Endboss) {
+        if (this.bottleHitsBossEnemy(enemy, bottle)) {
             this.bottleHitsEndboss(enemy, bottle);
             enemy.hit();
             bottle.energy -= 100;
             enemy.isHurt();
-            if (this.audio) {
-                this.splash_sound.play();
-            }
+            this.playBottleSplashSound();
         }
     };
 
 
+    /**
+     * checks if bottle hit a normal enemy like chicken or small chicken
+     * @param {enemy} enemy
+     * @param {ThrowableObject} bottle
+     * @returns bottle collision check
+     */
+    bottleHitsNormalEnemy(enemy, bottle) {
+        return enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken)
+    }
 
 
     /**
-    * check if throwable Object hits the ground
-    * @param {*} bottle ThrowableObject
-    */
-    bottleHitsGround(bottle) {
-        if (!bottle.isAboveGround()) {
-            bottle.energy -= 100;
-            bottle.speedX = 0;
-            if (this.audio) {
-                this.splash_sound.play();
-            }
+     * checks if bottle hit the boss enemy
+     * @param {enemy} enemy 
+     * @param {ThrowableObject} bottle 
+     * @returns bottle collision check
+     */
+    bottleHitsBossEnemy(enemy, bottle) {
+        return enemy.isColliding(bottle) && bottle.energy > 0 && bottle.isAboveGround() && enemy instanceof Endboss
+    }
+
+
+    /**
+     * plays splash sound if bottle hits anything
+     */
+    playBottleSplashSound() {
+        if (this.audio) {
+            this.splash_sound.play();
         }
     }
 
 
     /**
-     * check if throwable Object hits Endboss
+     * check if throwable object hits the ground
+     * @param {ThrowableObject} bottle
+     */
+    bottleHitsGround(bottle) {
+        if (!bottle.isAboveGround()) {
+            bottle.energy -= 100;
+            bottle.speedX = 0;
+            this.playBottleSplashSound();
+        }
+    }
+
+
+    /**
+     * check if throwable object hits endboss
      */
     bottleHitsEndboss(enemy, bottle) {
         this.endBossBar.percentage -= 20;
         this.endBossBar.setPercentageEndbossBar(this.endBossBar.percentage);
         bottle.speedY = enemy;
+        this.playEndbossHurtSound();
+    }
+
+
+    /**
+     * play endboss hurt sound
+     */
+    playEndbossHurtSound() {
         if (this.audio) {
             this.chicken_sound.volume = 0.3;
             this.chicken_sound.play();
@@ -193,17 +259,15 @@ class World {
 
     /**
      * checks the collision with normal enemies
-     * @param {*} enemy
+     * @param {enemy} enemy
      */
     checkEnemyCollision(enemy) {
-        if (this.character.isColliding(enemy) && !this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken || enemy instanceof Endboss) && enemy.energy > 0) {
-            this.playerInvincible();
+        if (this.playerGetHitByEnemy(enemy)) {
+            this.playerGotHitByEnemy();
         }
-        if (this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0) {
+        if (this.playerKillEnemy(enemy)) {
             enemy.energy -= 100;
-            if (this.audio) {
-                this.crushed_sound.play();
-            }
+            this.enemyDeadSound();
             this.character.lowJump();
             setTimeout(() => {
                 this.deadEnemyDisappear(enemy);
@@ -213,13 +277,73 @@ class World {
 
 
     /**
-     * let dead Chicken Bodys disappear
+     * checks if player jump on enemy to kill it
+     * @param {enemy} enemy 
+     * @returns check if player kill enemy
+     */
+    playerKillEnemy(enemy) {
+        return this.character.isColliding(enemy) && this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken) && enemy.energy > 0
+    }
+
+
+    /**
+     * play normal enemy dead sound
+     */
+    enemyDeadSound() {
+        if (this.audio) {
+            this.crushed_sound.play();
+        }
+    }
+
+
+    /**
+     * checks if player get hit by enemy collision
+     * @param {enemy} enemy 
+     * @returns player collision with enemy check
+     */
+    playerGetHitByEnemy(enemy) {
+        return this.character.isColliding(enemy) && !this.character.isAboveGround() && (enemy instanceof Chicken || enemy instanceof SmallChicken || enemy instanceof Endboss) && enemy.energy > 0
+    }
+
+
+    /**
+     * check player collision with enemies && if player got hit he is for 1 s invincible && update healthbar
+     */
+    playerGotHitByEnemy() {
+        if (!this.invincible) {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    this.character.hit();
+                    this.statusBar.setPercentageHealthBar(this.character.energy);
+                    this.playPlayerGotHurtSound();
+                    this.invincible = true; // Player can't be hit for 1 s
+                    setTimeout(() => {
+                        this.invincible = false; // Player can be hit again after 1 s
+                    }, 1000);
+                }
+            });
+        }
+    }
+
+
+    /**
+     * play player got hurt sound
+     */
+    playPlayerGotHurtSound() {
+        if (this.audio) {
+            this.hurt_sound.play();
+        }
+    }
+
+
+    /**
+     * let dead chicken bodys disappear
      */
     deadEnemyDisappear() {
         let deadEnemies = [];
         for (let i = 0; i < this.level.enemies.length; i++) {
             let enemy = this.level.enemies[i];
-            if (enemy.energy <= 0 && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
+            if (this.enemyIsDead(enemy)) {
                 deadEnemies.push(i);
             }
         }
@@ -232,49 +356,43 @@ class World {
 
 
     /**
-     * deletes the throwable bottles if they splashed
+     * checks if normal enemy is dead 
+     * @returns checks if enemy is dead
+     */
+    enemyIsDead(enemy) {
+        return enemy.energy <= 0 && (enemy instanceof Chicken || enemy instanceof SmallChicken)
+    }
+
+
+    /**
+     * deletes throwable bottles if they splashed
      */
     deleteThrowObject() {
         for (let i = 0; i < this.throwableObjects.length; i++) {
-            if (this.throwableObjects[i].energy == 0 && !this.throwableObjects[i].deleted || !this.throwableObjects[i].isAboveGround() && !this.throwableObjects[i].deleted) {
+            if (this.throwableObjectSplashed(i)) {
                 this.throwableObjects[i].deleted = true;
                 setTimeout(() => {
                     if (this.throwableObjects[i].deleted) {
                         this.throwableObjects.splice(i, 1)
                     }
-                }, 500);
+                }, 200);
             }
         }
     }
 
 
-
-
     /**
-     * check Player Collision with enemies && after hit Player is for 1 s invincible && update healthbar
+     * checks if throwableObject is splashed
+     * @param {throwableObject} i 
+     * @returns checks if throwableObject is splashed
      */
-    playerInvincible() {
-        if (!this.invincible) {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    this.statusBar.setPercentageHealthBar(this.character.energy);
-                    if (this.audio) {
-                        this.hurt_sound.play();
-                    }
-                    this.invincible = true; // Player can't be hit for 1 s
-                    setTimeout(() => {
-                        this.invincible = false; // Player can be hit again after 1 s
-                    }, 1000);
-                }
-            });
-        }
+    throwableObjectSplashed(i) {
+        return this.throwableObjects[i].energy == 0 && !this.throwableObjects[i].deleted || !this.throwableObjects[i].isAboveGround() && !this.throwableObjects[i].deleted
     }
 
 
-
     /**
-     * check Player collision with bottle && pick it up
+     * check player collision with bottle && pick it up
      */
     checkBottleCollision() {
         for (let i = 0; i < this.level.bottles.length; i++) {
@@ -283,11 +401,19 @@ class World {
                 this.level.bottles.splice(i, 1);
                 this.character.collectBottle();
                 this.bottleBar.setPercentageBottleBar(this.character.collectableBottle);
-                if (this.audio) {
-                    this.collectBottle_sound.volume = 0.2;
-                    this.collectBottle_sound.play();
-                }
+                this.playPickUpBottleSound();
             }
+        }
+    }
+
+
+    /**
+     * play pick up bottle sound
+     */
+    playPickUpBottleSound() {
+        if (this.audio) {
+            this.collectBottle_sound.volume = 0.2;
+            this.collectBottle_sound.play();
         }
     }
 
@@ -302,28 +428,34 @@ class World {
                 this.level.coins.splice(i, 1);
                 this.character.collectCoin();
                 this.coinBar.setPercentageCoinBar(this.character.collectableCoin);
-                if (this.audio) {
-                    this.coin_sound.volume = 0.2;
-                    this.coin_sound.play();
-                }
+                this.playPickUpCoinSound();
             }
         }
     }
 
 
     /**
-     * bottle always throwed from player position && checks if u collected bottles before throwing
+     * play pick up coin sound
+     */
+    playPickUpCoinSound() {
+        if (this.audio) {
+            this.coin_sound.volume = 0.2;
+            this.coin_sound.play();
+        }
+    }
+
+
+    /**
+     * bottle always throwed from player position && checks if u collected bottles before throwing && update bottlebar
      */
     checkThrowObjects() {
-        if (this.keyboard.UP && this.character.collectableBottle > 0 && !this.character.otherDirection) {
+        if (this.playerGotThrowableObjects()) {
             if (!this.throttled) {
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 this.character.collectableBottle -= 10;
                 this.bottleBar.setPercentageBottleBar(this.character.collectableBottle);
-                if (this.audio) {
-                    this.throw_sound.play();
-                }
+                this.playThrowSound();
                 this.throttled = true;
 
                 setTimeout(() => {
@@ -333,16 +465,44 @@ class World {
         }
     }
 
+    /**
+     * if key up is pressed and got throwable objects 
+     * @returns conditions for throwing Objects
+     */
+    playerGotThrowableObjects() {
+        return this.keyboard.UP && this.character.collectableBottle > 0 && !this.character.otherDirection
+    }
+
 
     /**
-     * triggert the chicken rush attack
+     * play throw sound
+     */
+    playThrowSound() {
+        if (this.audio) {
+            this.throw_sound.play();
+        }
+    }
+
+
+    /**
+     * activate endboss actions
      */
     activateEndboss() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.x - this.character.x < 600 && enemy.energy > 0 && enemy instanceof Endboss) {
+            if (this.playerIsNearEndboss(enemy)) {
                 enemy.speed = 3;
             }
         })
+    }
+
+
+    /**
+     * checks if player is near the endboss
+     * @param {enemy} enemy 
+     * @returns condition for endboss activation
+     */
+    playerIsNearEndboss(enemy) {
+        return enemy.x - this.character.x < 600 && enemy.energy > 0 && enemy instanceof Endboss
     }
 
 
@@ -351,7 +511,7 @@ class World {
      */
     chickenAttack() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy.x - this.character.x < 350 && enemy.energy > 0 && enemy instanceof Chicken) {
+            if (this.playerIsNearNormalChicken(enemy)) {
                 enemy.rushAttack();
             }
         })
@@ -359,7 +519,17 @@ class World {
 
 
     /**
-     * draw all Objects on the Canvas --> build game world
+     * checks if player is near normal chickens
+     * @param {enemy} enemy 
+     * @returns condition for chicken rush attack
+     */
+    playerIsNearNormalChicken(enemy) {
+        return enemy.x - this.character.x < 350 && enemy.energy > 0 && enemy instanceof Chicken
+    }
+
+
+    /**
+     * draw all objects on the canvas --> build game world
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -373,16 +543,16 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
 
-        this.ctx.translate(-this.camera_x, 0); // Status Bar's stays left top corner in the Screen
+        this.ctx.translate(-this.camera_x, 0); // status bar's stays left top corner on the screen
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.level.enemies.forEach((enemy) => {
-            if (enemy.x - this.character.x < 700 && enemy.energy > 0 && enemy instanceof Endboss) {
+            if (this.playerIsNearEndboss(enemy)) {
                 this.addToMap(this.endBossBar);
             }
         });
-        this.ctx.translate(this.camera_x, 0); // Status Bar's stays left top corner in the Screen
+        this.ctx.translate(this.camera_x, 0); // status bar's stays left top corner on the screen
 
         this.ctx.translate(-this.camera_x, 0);
         // executes Draw() again and again!
@@ -395,7 +565,7 @@ class World {
 
 
     /**
-     * add all Movable Objects to Map (except Pepe)
+     * add all movable objects to map (except Pepe)
      * @param {movable Object} objects
      */
     addObjectsToMap(objects) {
@@ -406,7 +576,7 @@ class World {
 
 
     /**
-     * add Character Pepe and Status Bars to Map && mirrors the Image if Player walks to left
+     * add character Pepe and status bars to map && mirrors the image if player walks to left
      * @param {movable Object} mo
      */
     addToMap(mo) {
@@ -423,7 +593,7 @@ class World {
 
 
     /**
-     * mirrors Player Image if moving left
+     * mirrors player image if moving left
      * @param {Movable Object} mo 
      */
     mirrorImage(mo) {
@@ -435,7 +605,7 @@ class World {
 
 
     /**
-     * mirrors Player Image back if moving right again
+     * mirrors player image back if moving right again
      * @param {Movable Object} mo 
      */
     mirrorImageBack(mo) {
@@ -445,7 +615,7 @@ class World {
 
 
     /**
-     * plays the main ingame Theme
+     * plays the main ingame theme
      */
     playIngameBackgroundMusic() {
         if (this.audio) {

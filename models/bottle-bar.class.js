@@ -23,7 +23,7 @@ class BottleBar extends DrawableObject {
 
 
     /**
-     * 
+     * set percentage of bottlebar
      * @param {% of Bottlebar} percentage 
      */
     setPercentageBottleBar(percentage) {

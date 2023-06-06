@@ -6,7 +6,7 @@ let hideSettings = true;
 
 
 /**
- * draws the whole World into the Canvas --> starts the Game
+ * draws the whole world into the canvas --> starts the game
  */
 function init() {
     hideStartscreen();
@@ -18,7 +18,7 @@ function init() {
 
 
 /**
- * restart Game after finished it once
+ * restart game after finished it once
  */
 function restartGame() {
     hideEndscreen();
@@ -30,7 +30,7 @@ function restartGame() {
 
 
 /**
- * stop win or lose sound if restart Game
+ * stop win or lose sound if restart game
  */
 function stopAudio() {
     world.win_sound.pause();
@@ -39,7 +39,7 @@ function stopAudio() {
 
 
 /**
- * hide Startscreen
+ * hide startscreen
  */
 function hideStartscreen() {
     document.getElementById('startscreen').classList.add('d-none');
@@ -47,7 +47,7 @@ function hideStartscreen() {
 
 
 /**
- * show Startscreen
+ * show startscreen
  */
 function showStartscreen() {
     document.getElementById('startscreen').classList.remove('d-none');
@@ -55,7 +55,7 @@ function showStartscreen() {
 
 
 /**
- * hide Endscreen
+ * hide endscreen
  */
 function hideEndscreen() {
     document.getElementById('game-over').classList.add('d-none');
@@ -64,7 +64,7 @@ function hideEndscreen() {
 
 
 /**
- * hide Controls (used if you lose or win game and u have settings still displayed)
+ * hide controls (used if you lose or win game and u have settings still displayed)
  */
 function hideControls() {
     document.getElementById('settings').classList.add('d-none');
@@ -72,7 +72,7 @@ function hideControls() {
 
 
 /**
- * show Volume Button
+ * show volume button
  */
 function showVolumeBtn() {
     document.getElementById('volume').classList.remove('d-none');
@@ -80,7 +80,7 @@ function showVolumeBtn() {
 
 
 /**
- * hide Volume Button
+ * hide volume button
  */
 function hideVolumeBtn() {
     document.getElementById('volume').classList.add('d-none');
@@ -88,7 +88,7 @@ function hideVolumeBtn() {
 
 
 /**
- * display and hide Game Settings
+ * display and hide game settings
  */
 function showSettings() {
     let settings = document.getElementById('settings');
@@ -104,7 +104,7 @@ function showSettings() {
 
 
 /**
- * enter/exit Fullscreen Mode
+ * enter/exit fullscreen mode
  */
 function fullscreen() {
     let fullscreen = document.getElementById('content');
@@ -119,7 +119,7 @@ function fullscreen() {
 
 
 /**
- * set the fullscreenMode Var to false if Fullscreen exits with ESC Button
+ * set the fullscreenMode var to false if fullscreen exits with esc button
  */
 function exitFullscreenHandler() {
     if (!document.fullscreenElement) {

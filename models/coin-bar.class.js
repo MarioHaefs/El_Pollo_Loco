@@ -23,7 +23,7 @@ class CoinBar extends DrawableObject {
 
 
     /**
-     * 
+     * set percentage of coinbar
      * @param {% of Coinbar} percentage 
      */
     setPercentageCoinBar(percentage) {

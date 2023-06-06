@@ -8,15 +8,15 @@ class Keyboard {
 
     constructor() {
         document.addEventListener('DOMContentLoaded', () => {
-          this.bindKeyPressEvents();
-          this.bindBtnPressEvents();
+            this.bindKeyPressEvents();
+            this.bindBtnPressEvents();
         });
-      }
+    }
 
 
     /**
-    * bind created buttons to variables --> controls to play the Game on Mobile Devices
-    */
+     * bind control images to variables --> controls to play the game on mobile devices
+     */
     bindBtnPressEvents() {
         document.getElementById('btn-left').addEventListener('touchstart', (e) => {
             e.preventDefault();
@@ -61,8 +61,8 @@ class Keyboard {
 
 
     /**
-    * bind keyboard buttons to variables --> controls to play the Game
-    */
+     * bind keyboard buttons to variables --> controls to play the game on desktop
+     */
     bindKeyPressEvents() {
         window.addEventListener("keydown", (e) => {
             if (e.keyCode == 39) {

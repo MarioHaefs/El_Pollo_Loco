@@ -23,7 +23,7 @@ class StatusBar extends DrawableObject {
 
 
     /**
-     * 
+     * show percentage of player-healthbar
      * @param {% of Healthbar} percentage
      */
     setPercentageHealthBar(percentage) {
@@ -35,7 +35,7 @@ class StatusBar extends DrawableObject {
 
 
     /**
-     * 
+     * check which img shows at player-healthbar
      * @returns return value which image shows on which % of status bar
      */
     resolveImageIndex() {

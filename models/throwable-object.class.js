@@ -37,25 +37,41 @@ class ThrowableObject extends MovableObject {
 
 
     /**
-     * play the animation from the bottle
+     * play animations of throwable objects --> bottles
      */
     animate() {
         setInterval(() => {
-            if (!this.isHurt() && this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
-            }
+            this.flyingBottle();
         }, 100);
 
         setInterval(() => {
-            if (this.energy <= 0 || !this.isAboveGround()) {
-                this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
-            }
+            this.splashingBottle();
         }, 200);
     }
 
 
     /**
-     * throw bottle and control flying curve of the bottle
+     * plays animation of flying bottles
+     */
+    flyingBottle() {
+        if (!this.isHurt() && this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_BOTTLE_ROTATION);
+        }
+    }
+
+
+    /**
+     * plays animation of destroyed bottles
+     */
+    splashingBottle() {
+        if (this.energy <= 0 || !this.isAboveGround()) {
+            this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
+        }
+    }
+
+
+    /**
+     * throw bottle && sets the parameters of bottles flying curve
      */
     throw() {
         this.speedY = 30;
