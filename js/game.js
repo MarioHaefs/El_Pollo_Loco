@@ -14,6 +14,7 @@ function init() {
     canvas = document.getElementById('canvas');
     initLevel();
     world = new World(canvas, keyboard);
+    setAudio();
 }
 
 
@@ -138,6 +139,7 @@ function volumeMute() {
     let volume = document.getElementById('volume');
     volume.src = 'assets/img/sound-off.png';
     volume.setAttribute('onclick', 'volumeUp()');
+    localStorage.setItem('audio', false);
 }
 
 /**
@@ -148,6 +150,7 @@ function volumeUp() {
     let volume = document.getElementById('volume');
     volume.src = 'assets/img/sound.png';
     volume.setAttribute('onclick', 'volumeMute()');
+    localStorage.setItem('audio', true);
 }
 
 
@@ -157,4 +160,19 @@ function volumeUp() {
 function changeVolumeImg() {
     let volume = document.getElementById('volume');
     volume.src = 'assets/img/sound.png';
+}
+
+
+/**
+ * checks if audio mute in localstorage
+ */
+function setAudio() {
+    let storage = localStorage.getItem('audio');
+    if (storage) {
+        if (storage == 'false') {
+            volumeMute();
+        }
+    } else {
+        world.audio = true
+    }
 }
