@@ -114,7 +114,7 @@ class World {
      * @returns conditions if player lose
      */
     gameBeatPlayer() {
-        return this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0
+        return this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0 
     }
 
 
@@ -312,7 +312,7 @@ class World {
     playerGotHitByEnemy() {
         if (!this.invincible) {
             this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
+                if (this.character.isColliding(enemy) && (enemy instanceof Chicken || enemy instanceof SmallChicken)) {
                     this.character.hit();
                     this.statusBar.setPercentageHealthBar(this.character.energy);
                     this.playPlayerGotHurtSound();
@@ -320,6 +320,9 @@ class World {
                     setTimeout(() => {
                         this.invincible = false; // Player can be hit again after 1 s
                     }, 1000);
+                } else if (this.character.isColliding(enemy) && enemy instanceof Endboss) {
+                    this.character.energy = 0;
+                    this.statusBar.setPercentageHealthBar(this.character.energy);
                 }
             });
         }
@@ -491,7 +494,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.playerIsNearEndboss(enemy)) {
                 enemy.speed = 3;
-            }
+            } 
         })
     }
 
@@ -502,7 +505,7 @@ class World {
      * @returns condition for endboss activation
      */
     playerIsNearEndboss(enemy) {
-        return enemy.x - this.character.x < 600 && enemy.energy > 0 && enemy instanceof Endboss
+        return enemy.x - this.character.x < 600 && enemy.energy > 0 && enemy instanceof Endboss && !enemy.isHurt()
     }
 
 
@@ -548,7 +551,7 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         this.level.enemies.forEach((enemy) => {
-            if (this.playerIsNearEndboss(enemy)) {
+            if (enemy.x - this.character.x < 600 && enemy.energy > 0 && enemy instanceof Endboss) {
                 this.addToMap(this.endBossBar);
             }
         });
