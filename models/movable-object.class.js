@@ -2,7 +2,7 @@ class MovableObject extends DrawableObject {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 2.5;
+    acceleration = 3;
     energy = 100;
     lastHit = 0;
     collectableBottle = 0;
@@ -84,6 +84,21 @@ class MovableObject extends DrawableObject {
     /**
      * if character is in the air apply gravity and let him fall
      */
+    applyGravityPlayer() {
+        setInterval(() => {
+            if (this.isAboveGround() || this.speedY > 0) {
+                this.y -= this.speedY;
+                this.speedY -= this.acceleration;
+            } else {
+                this.y = 155;
+            }
+        }, 1000 / 25);
+    }
+
+
+    /**
+     * if character is in the air apply gravity and let him fall
+     */
     applyGravity() {
         setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
@@ -101,7 +116,7 @@ class MovableObject extends DrawableObject {
     isAboveGround() {
         if (this instanceof ThrowableObject) { // Throwable Objects should always fall
             return this.y < 350;
-        } else {
+        } else if (this instanceof Character) {
             return this.y < 155;
         }
     }
@@ -139,7 +154,7 @@ class MovableObject extends DrawableObject {
      * let character jump
      */
     jump() {
-        this.speedY = 28;
+        this.speedY = 27;
     }
 
 
@@ -147,7 +162,7 @@ class MovableObject extends DrawableObject {
      * lowJump() used by player if he kills enemies && small Chicken
      */
     lowJump() {
-        this.speedY = 15;
+        this.speedY = 10;
     }
 
 
@@ -170,8 +185,13 @@ class MovableObject extends DrawableObject {
         setInterval(() => {
             if (this.isAboveGroundChicken() || this.speedY > 0) {
                 this.y -= this.speedY;
-                this.speedY -= this.acceleration;
+             this.speedY -= this.acceleration;
+            } else if (this instanceof SmallChicken) {
+                this.y = 372;
+            } else if (this instanceof Chicken) {
+                this.y = 330;
             }
+            
         }, 1000 / 25);
     }
 

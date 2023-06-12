@@ -160,6 +160,12 @@ h2 {
     background-color: rgba(0, 0, 0, 0.8);
     z-index: 99999;
     color: #fff;
+    flex-direction: column;
+    text-align: center;
+}
+
+.text-spacing {
+    margin-bottom: 48px;
 }
 
 .mobile-btn-position-LR {
@@ -178,7 +184,7 @@ h2 {
     z-index: 5000;
 }
 
-@media only screen and (max-width: 720px) {
+@media (max-width: 720px) {
     canvas {
         width: 100%;
     }
@@ -186,9 +192,10 @@ h2 {
     .turn {
         display: flex;
     }
+
 }
 
-@media only screen and (max-height: 600px) {
+@media (max-height: 600px) {
     canvas {
         height: 99.3svh;
         width: 100%;
@@ -205,15 +212,26 @@ h2 {
 
 @media (hover: none) {
     .mobile-btn-position-LR {
-       display: block;
+        display: block;
     }
-    
+
     .mobile-btn-position-JT {
         display: block;
     }
 }
 
-@media only screen and (max-height: 400px) {
+@media (pointer: coarse) {
+    .mobile-btn-position-LR {
+        display: block;
+    }
+
+    .mobile-btn-position-JT {
+        display: block;
+    }
+  }
+  
+
+@media (max-height: 400px) {
     .settings-btn {
         height: 24px;
         width: 24px;
@@ -224,10 +242,10 @@ h2 {
     }
 }
 
-@media only screen and (max-height: 750px) {
-   h1 {
-    margin-top: 25px;
-    margin-bottom: 25px;
-   }
+@media (max-height: 750px) {
+    h1 {
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
 
 }

@@ -45,7 +45,7 @@ class Chicken extends MovableObject {
      * rush attack of normal chickens
      */
     rushAttack() {
-        this.speed = 3;
+        this.speed = 4;
         if (!this.isAboveGroundChicken()) {
             this.lowJump();
         }
