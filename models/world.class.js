@@ -114,7 +114,7 @@ class World {
      * @returns conditions if player lose
      */
     gameBeatPlayer() {
-        return this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0 
+        return this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0
     }
 
     /**
@@ -125,7 +125,7 @@ class World {
             if (enemy.x - this.character.x < 0 && enemy instanceof Endboss) {
                 this.character.energy = 0;
                 this.statusBar.setPercentageHealthBar(this.character.energy);
-            } 
+            }
         })
     }
 
@@ -150,7 +150,7 @@ class World {
 
 
     /**
-     *  checks all collision situations in the game
+     * checks all collision situations in the game
      */
     checkCollisions() {
         if (!this.character.isHurt()) {
@@ -166,7 +166,7 @@ class World {
 
 
     /**
-     * this function checks the collision with throwable objects & play the bottle sound
+     * checks the collision with throwable objects & play the bottle sound
      */
     checkThrowableObjectCollision() {
         this.throwableObjects.forEach(bottle => {
@@ -242,6 +242,7 @@ class World {
         if (!bottle.isAboveGround()) {
             bottle.energy -= 100;
             bottle.speedX = 0;
+            bottle.speedXLeft = 0;
             this.playBottleSplashSound();
         }
     }
@@ -466,7 +467,7 @@ class World {
     checkThrowObjects() {
         if (this.playerGotThrowableObjects()) {
             if (!this.throttled) {
-                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                let bottle = new ThrowableObject(this.character.x + 20, this.character.y + 100);
                 this.throwableObjects.push(bottle);
                 this.character.collectableBottle -= 10;
                 this.bottleBar.setPercentageBottleBar(this.character.collectableBottle);
@@ -485,7 +486,7 @@ class World {
      * @returns conditions for throwing Objects
      */
     playerGotThrowableObjects() {
-        return this.keyboard.UP && this.character.collectableBottle > 0 && !this.character.otherDirection
+        return this.keyboard.UP && this.character.collectableBottle > 0
     }
 
 
@@ -506,7 +507,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.playerIsNearEndboss(enemy)) {
                 enemy.speed = 3;
-            } 
+            }
         })
     }
 

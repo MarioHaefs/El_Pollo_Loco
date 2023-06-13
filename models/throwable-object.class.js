@@ -15,6 +15,7 @@ class ThrowableObject extends MovableObject {
         'assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png'
     ];
     speedX = 7;
+    speedXLeft = -7;
     offset = {
         top: 25,
         left: 25,
@@ -32,6 +33,7 @@ class ThrowableObject extends MovableObject {
         this.height = 90;
         this.width = 75;
         this.throw();
+        this.throwLeft();
         this.animate();
     }
 
@@ -74,10 +76,26 @@ class ThrowableObject extends MovableObject {
      * throw bottle && sets the parameters of bottles flying curve
      */
     throw() {
-        this.speedY = 30;
-        this.applyGravity();
-        setInterval(() => {
-            this.x += this.speedX;
-        }, 25);
+        if (!world.character.otherDirection) {
+            this.speedY = 30;
+            this.applyGravity();
+            setInterval(() => {
+                this.x += this.speedX;
+            }, 25);
+        }
+    }
+
+
+    /**
+     * throw bottle left && sets the parameters of bottles flying curve
+     */
+    throwLeft() {
+        if (world.character.otherDirection) {
+            this.speedY = 30;
+            this.applyGravity();
+            setInterval(() => {
+                this.x += this.speedXLeft;
+            }, 25);
+        }
     }
 }
