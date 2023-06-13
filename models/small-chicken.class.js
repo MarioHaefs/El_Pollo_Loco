@@ -8,6 +8,12 @@ class SmallChicken extends MovableObject {
         'assets/img/3_enemies_chicken/chicken_small/1_walk/3_w.png',
     ];
     IMAGE_SMALL_CHICKEN_DEAD = 'assets/img/3_enemies_chicken/chicken_small/2_dead/dead.png';
+    offset = {
+        top: 0,
+        left: -20,
+        bottom: 0,
+        right: -20
+    };
 
 
     constructor() {

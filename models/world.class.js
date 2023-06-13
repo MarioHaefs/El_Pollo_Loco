@@ -506,7 +506,7 @@ class World {
     activateEndboss() {
         this.level.enemies.forEach((enemy) => {
             if (this.playerIsNearEndboss(enemy)) {
-                enemy.speed = 3;
+                enemy.speed = 4;
             }
         })
     }

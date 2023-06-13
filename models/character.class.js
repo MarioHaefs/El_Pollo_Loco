@@ -60,7 +60,7 @@ class Character extends MovableObject {
     height = 280;
     width = 125;
     y = 155;
-    speed = 6;
+    speed = 5;
     lastMoveTime;
     offset = {
         top: 150,
