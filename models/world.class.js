@@ -98,13 +98,13 @@ class World {
      */
     checkLostGame() {
         let lostGame = document.getElementById('lost-game');
-        if (this.gameBeatPlayer()) {
+        if (this.gameBeatPlayer() || this.surpassEndboss()) {
             lostGame.classList.remove('d-none');
             hideControls();
             setTimeout(() => {
                 this.playLoseSound();
                 this.clearAllIntervals();
-            }, 800);
+            }, 600);
         }
     }
 
@@ -115,6 +115,18 @@ class World {
      */
     gameBeatPlayer() {
         return this.character.energy <= 0 && this.character.collectableCoin <= 100 && this.endBossBar.percentage > 0 
+    }
+
+    /**
+     * checks if player lose the game by surpassing Endboss
+     */
+    surpassEndboss() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.x - this.character.x < 0 && enemy instanceof Endboss) {
+                this.character.energy = 0;
+                this.statusBar.setPercentageHealthBar(this.character.energy);
+            } 
+        })
     }
 
 
@@ -316,10 +328,10 @@ class World {
                     this.character.hit();
                     this.statusBar.setPercentageHealthBar(this.character.energy);
                     this.playPlayerGotHurtSound();
-                    this.invincible = true; // Player can't be hit for 1 s
+                    this.invincible = true; // Player can't be hit for 0.5 s
                     setTimeout(() => {
-                        this.invincible = false; // Player can be hit again after 1 s
-                    }, 1000);
+                        this.invincible = false; // Player can be hit again after 0.5 s
+                    }, 500);
                 } else if (this.character.isColliding(enemy) && enemy instanceof Endboss) {
                     this.character.energy = 0;
                     this.statusBar.setPercentageHealthBar(this.character.energy);
@@ -505,7 +517,7 @@ class World {
      * @returns condition for endboss activation
      */
     playerIsNearEndboss(enemy) {
-        return enemy.x - this.character.x < 600 && enemy.energy > 0 && enemy instanceof Endboss && !enemy.isHurt()
+        return enemy.x - this.character.x < 700 && enemy.energy > 0 && enemy instanceof Endboss && !enemy.isHurt()
     }
 
 

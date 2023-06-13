@@ -73,6 +73,15 @@ function hideControls() {
 
 
 /**
+ * hide Settings
+ */
+function hideSettingsOnX() {
+    let settings = document.getElementById('settings');
+    settings.classList.add('d-none');
+}
+
+
+/**
  * show volume button
  */
 function showVolumeBtn() {
@@ -93,14 +102,7 @@ function hideVolumeBtn() {
  */
 function showSettings() {
     let settings = document.getElementById('settings');
-
-    if (hideSettings) {
-        settings.classList.remove('d-none');
-        hideSettings = false;
-    } else if (!hideSettings) {
-        settings.classList.add('d-none');
-        hideSettings = true;
-    }
+    settings.classList.remove('d-none');
 }
 
 

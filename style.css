@@ -184,6 +184,18 @@ h2 {
     z-index: 5000;
 }
 
+.x {
+    height: 32px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.x:hover {
+    transform: scale(1.05);
+}
+
 @media (max-width: 720px) {
     canvas {
         width: 100%;

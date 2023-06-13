@@ -134,9 +134,7 @@ class Character extends MovableObject {
         this.moveRight();
         this.setLastMoveTime()
         this.otherDirection = false;
-        if (this.world.audio) {
-            this.walking_sound.play();
-        }
+        this.playWalkingSound();
     }
 
 
@@ -154,8 +152,13 @@ class Character extends MovableObject {
      */
     playerMoveLeft() {
         this.moveLeft();
-        this.setLastMoveTime()
+        this.setLastMoveTime();
         this.otherDirection = true;
+        this.playWalkingSound();
+    }
+
+
+    playWalkingSound() {
         if (this.world.audio) {
             this.walking_sound.play();
         }
